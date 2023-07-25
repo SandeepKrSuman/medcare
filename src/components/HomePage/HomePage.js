@@ -7,6 +7,7 @@ import styles from "./HomePage.module.css";
 export default function HomePage() {
   return (
     <div className={styles.container}>
+      {/* Left Column */}
       <div className={styles.leftColumn}>
         <p className={styles.heading}>
           <span className={styles.p1}>Med</span>{" "}
@@ -26,6 +27,8 @@ export default function HomePage() {
           </Button>
         </div>
       </div>
+
+      {/* Right Column */}
       <div className={styles.rightColumn}>
         <img src="/health.png" alt="" draggable="false" />
       </div>
