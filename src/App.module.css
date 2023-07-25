@@ -1,0 +1,10 @@
+.container {
+    padding-left: 7%;
+    padding-right: 7%;
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        padding-top: 10%;
+    }
+}
