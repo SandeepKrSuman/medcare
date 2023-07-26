@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    padding: 7%
+}
+
+.card {
+    text-align: center;
+    cursor: pointer;
+}
+
+.card:hover {
+    background-color: #eeeeee;
+    -ms-transform: scale(1.03);
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
+  }
