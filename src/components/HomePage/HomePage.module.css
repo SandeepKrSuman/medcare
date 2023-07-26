@@ -45,6 +45,12 @@
     margin-top: 50px;
 }
 
+.linkBtn,
+.linkBtn:hover {
+  text-decoration: none;
+  outline: none;
+}
+
 .rightColumn {
     display: flex;
     justify-content: center;
