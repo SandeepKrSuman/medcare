@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.frameContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.frameContainer p {
+    color: #000;
+    opacity: 0.5;
+    padding: 10px 5px;
+}
+
+.frame {
+    border: none;
+    width: 80%;
+}
