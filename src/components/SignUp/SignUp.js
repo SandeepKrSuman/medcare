@@ -14,6 +14,7 @@ import styles from "./SignUp.module.css";
 
 export default function SignUp() {
   const [user, setUser] = useState("patient");
+  const [department, setDepartment] = useState("");
   const [speciality, setSpeciality] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -70,6 +71,19 @@ export default function SignUp() {
             <MenuItem value={"doctor"}>Doctor</MenuItem>
           </Select>
         </Box>
+
+        {user === "doctor" && (
+          <TextField
+            name="department"
+            required
+            fullWidth
+            id="department"
+            label="Department"
+            sx={{ marginBottom: "10px" }}
+            value={department}
+            onChange={(event) => setDepartment(event.target.value)}
+          />
+        )}
 
         {user === "doctor" && (
           <TextField
