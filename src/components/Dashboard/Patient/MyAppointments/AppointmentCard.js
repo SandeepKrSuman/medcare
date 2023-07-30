@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./AppointmentCard.module.css";
 import {
   Button,
   Card,

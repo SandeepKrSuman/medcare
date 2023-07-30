@@ -24,14 +24,21 @@ const appointments = [
     speciality: "MBBS, Surgeon",
     date: "30 Jan 2023",
     time: "6pM - 7pM",
-    payment: false,
+    payment: true,
   },
   {
     doctor: "Dr. Mukharjee",
     speciality: "MBBS, Surgeon",
     date: "30 Jan 2023",
     time: "6pM - 7pM",
-    payment: false,
+    payment: true,
+  },
+  {
+    doctor: "Dr. Dwarka Prasad",
+    speciality: "MBBS, Surgeon",
+    date: "30 Jan 2023",
+    time: "6pM - 7pM",
+    payment: true,
   },
   {
     doctor: "Dr. Dwarka Prasad",
