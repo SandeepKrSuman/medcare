@@ -17,11 +17,6 @@
     gap: 5px;
 }
 
-.userType {
-    align-self: self-start;
-    margin-bottom: 10px;
-}
-
 .nameContainer {
     display: flex;
     justify-content: center;

@@ -1,19 +1,13 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Avatar,
-  Typography,
-  TextField,
-  Button,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Box, Avatar, Typography, TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import styles from "./SignUp.module.css";
+import SelectInput from "../SelectInput/SelectInput";
+
+const options = ["Patient", "Staff", "Doctor"];
 
 export default function SignUp() {
-  const [user, setUser] = useState("patient");
+  const [user, setUser] = useState("Patient");
   const [department, setDepartment] = useState("");
   const [speciality, setSpeciality] = useState("");
   const [fname, setFname] = useState("");
@@ -54,25 +48,14 @@ export default function SignUp() {
         </Typography>
 
         {/* User Type Field */}
-        <Box component="div" className={styles.userType}>
-          <InputLabel id="demo-simple-select-label">User Type</InputLabel>
-          <Select
-            labelId="user-type"
-            id="user-type"
-            label="User Type"
-            value={user}
-            name="user-type"
-            onChange={(event) => setUser(event.target.value)}
-          >
-            <MenuItem value={"patient"} selected>
-              Patient
-            </MenuItem>
-            <MenuItem value={"staff"}>Reception Staff</MenuItem>
-            <MenuItem value={"doctor"}>Doctor</MenuItem>
-          </Select>
-        </Box>
+        <SelectInput
+          label="User Type"
+          value={user}
+          setValue={setUser}
+          options={options}
+        />
 
-        {user === "doctor" && (
+        {user === "Doctor" && (
           <TextField
             name="department"
             required
@@ -85,7 +68,7 @@ export default function SignUp() {
           />
         )}
 
-        {user === "doctor" && (
+        {user === "Doctor" && (
           <TextField
             name="speciality"
             required
