@@ -2,10 +2,13 @@ import React from "react";
 import Dashboard from "../Dashboard";
 
 const tabs = [
-  { title: "Appointments", redirect: "/" },
-  { title: "Upload Prescription", redirect: "/" },
-  { title: "Take a Leave", redirect: "/" },
-  { title: "Feedbacks", redirect: "/" },
+  { title: "Appointments", redirect: "/dashboard/doctor/appointments" },
+  {
+    title: "Upload Prescription",
+    redirect: "/dashboard/doctor/upload-prescription",
+  },
+  { title: "Take a Leave", redirect: "/dashboard/doctor/take-a-leave" },
+  { title: "Feedbacks", redirect: "/dashboard/doctor/feedbacks" },
 ];
 
 export default function DoctorDash() {

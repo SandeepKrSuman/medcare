@@ -2,11 +2,11 @@ import React from "react";
 import Dashboard from "../Dashboard";
 
 const tabs = [
-  { title: "List of Doctors", redirect: "/" },
-  { title: "List of Staffs", redirect: "/" },
-  { title: "Generate Stats", redirect: "/" },
-  { title: "Verify User", redirect: "/" },
-  { title: "Feedbacks", redirect: "/" },
+  { title: "List of Doctors", redirect: "/dashboard/admin/doc-list" },
+  { title: "List of Staffs", redirect: "/dashboard/admin/staff-list" },
+  { title: "Generate Stats", redirect: "/dashboard/admin/generate-stats" },
+  { title: "Verify User", redirect: "/dashboard/admin/verify-user" },
+  { title: "Feedbacks", redirect: "/dashboard/admin/feedbacks" },
 ];
 
 export default function AdminDash() {

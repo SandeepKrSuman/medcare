@@ -1,9 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Grid, Card, CardContent, Typography } from "@mui/material";
 
 import styles from "./DashTabs.module.css";
 
 export default function DashTabs({ tabs }) {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.container}>
       <Grid className={styles.grid} container spacing={3}>
@@ -13,7 +16,7 @@ export default function DashTabs({ tabs }) {
               className={styles.card}
               sx={{ maxWidth: "100%" }}
               variant="outlined"
-              //   onClick={() => handleClick(props.cardTitle)}
+              onClick={() => navigate(tab.redirect)}
             >
               <CardContent>
                 <br /> <br />
