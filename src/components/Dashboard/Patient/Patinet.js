@@ -7,7 +7,7 @@ const tabs = [
   { title: "Book Appointment", redirect: "/" },
   { title: "Make Payment", redirect: "/" },
   { title: "Prescriptions", redirect: "/" },
-  { title: "Feedback", redirect: "/" },
+  { title: "Feedbacks", redirect: "/" },
 ];
 
 export default function PatientDash() {
