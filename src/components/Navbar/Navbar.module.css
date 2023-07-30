@@ -15,15 +15,3 @@
     font-size: 1.2rem;
     font-family: 'Noto Sans', sans-serif;
   }
-  
-  .logoutButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 0;
-    color: white;
-    font-size: 2rem;
-  }
-  
