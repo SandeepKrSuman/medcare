@@ -18,6 +18,7 @@ import DocList from "./components/Dashboard/Admin/DocList/DocList";
 import StaffList from "./components/Dashboard/Admin/StaffList/StaffList";
 import GenerateStats from "./components/Dashboard/Admin/GenerateStats/GenerateStats";
 import ViewFeedbacks from "./components/Dashboard/Admin/Feedbacks/ViewFeedbacks";
+import VerifyUser from "./components/Dashboard/Admin/VerifyUser/VerifyUser";
 
 function App() {
   return (
@@ -83,6 +84,11 @@ function App() {
           path="/dashboard/admin/feedbacks"
           exact
           element={<ViewFeedbacks />}
+        />
+        <Route
+          path="/dashboard/admin/verify-user"
+          exact
+          element={<VerifyUser />}
         />
 
         <Route path="/*" element={<Page404 />} />
