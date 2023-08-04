@@ -20,6 +20,9 @@ import GenerateStats from "./components/Dashboard/Admin/GenerateStats/GenerateSt
 import ViewFeedbacks from "./components/Dashboard/Admin/Feedbacks/ViewFeedbacks";
 import VerifyUser from "./components/Dashboard/Admin/VerifyUser/VerifyUser";
 import AvailableDoctors from "./components/Dashboard/Staff/AvailableDoctors/AvailableDoctors";
+import BookAppointmentStaff from "./components/Dashboard/Staff/BookAppointment/BookAppointmentStaff";
+import CancelAppointment from "./components/Dashboard/Staff/CancelAppointment/CancelAppointment";
+import MakePaymentStaff from "./components/Dashboard/Staff/MakePayment/MakePaymentStaff";
 
 function App() {
   return (
@@ -71,6 +74,21 @@ function App() {
           path="/dashboard/staff/available-doctors"
           exact
           element={<AvailableDoctors />}
+        />
+        <Route
+          path="/dashboard/staff/book-appointment"
+          exact
+          element={<BookAppointmentStaff />}
+        />
+        <Route
+          path="/dashboard/staff/cancel-appointment"
+          exact
+          element={<CancelAppointment />}
+        />
+        <Route
+          path="/dashboard/staff/make-payment"
+          exact
+          element={<MakePaymentStaff />}
         />
 
         {/* Admin Dashboard */}
