@@ -15,6 +15,7 @@ import MyAppointments from "./components/Dashboard/Patient/MyAppointments/MyAppo
 import Prescriptions from "./components/Dashboard/Patient/Prescriptions/Prescriptions";
 import Feedbacks from "./components/Dashboard/Patient/Feedbacks/Feedbacks";
 import DocList from "./components/Dashboard/Admin/DocList/DocList";
+import StaffList from "./components/Dashboard/Admin/StaffList/StaffList";
 
 function App() {
   return (
@@ -66,6 +67,11 @@ function App() {
         {/* Admin Dashboard */}
         <Route path="/dashboard/admin" exact element={<AdminDash />} />
         <Route path="/dashboard/admin/doc-list" exact element={<DocList />} />
+        <Route
+          path="/dashboard/admin/staff-list"
+          exact
+          element={<StaffList />}
+        />
 
         <Route path="/*" element={<Page404 />} />
       </Routes>
