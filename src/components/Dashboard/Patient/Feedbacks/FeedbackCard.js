@@ -36,6 +36,9 @@ export default function FeedbackCard(props) {
           value={feedbackText}
           id="fullWidth"
           autoComplete="off"
+          inputProps={{
+            maxLength: 280,
+          }}
           onChange={(event) => setFeedbackText(event.target.value)}
         />
         <CardActions disableSpacing>

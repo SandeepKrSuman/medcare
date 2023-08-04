@@ -17,6 +17,7 @@ import Feedbacks from "./components/Dashboard/Patient/Feedbacks/Feedbacks";
 import DocList from "./components/Dashboard/Admin/DocList/DocList";
 import StaffList from "./components/Dashboard/Admin/StaffList/StaffList";
 import GenerateStats from "./components/Dashboard/Admin/GenerateStats/GenerateStats";
+import ViewFeedbacks from "./components/Dashboard/Admin/Feedbacks/ViewFeedbacks";
 
 function App() {
   return (
@@ -77,6 +78,11 @@ function App() {
           path="/dashboard/admin/generate-stats"
           exact
           element={<GenerateStats />}
+        />
+        <Route
+          path="/dashboard/admin/feedbacks"
+          exact
+          element={<ViewFeedbacks />}
         />
 
         <Route path="/*" element={<Page404 />} />
