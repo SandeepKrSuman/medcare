@@ -16,6 +16,7 @@ import Prescriptions from "./components/Dashboard/Patient/Prescriptions/Prescrip
 import Feedbacks from "./components/Dashboard/Patient/Feedbacks/Feedbacks";
 import DocList from "./components/Dashboard/Admin/DocList/DocList";
 import StaffList from "./components/Dashboard/Admin/StaffList/StaffList";
+import GenerateStats from "./components/Dashboard/Admin/GenerateStats/GenerateStats";
 
 function App() {
   return (
@@ -71,6 +72,11 @@ function App() {
           path="/dashboard/admin/staff-list"
           exact
           element={<StaffList />}
+        />
+        <Route
+          path="/dashboard/admin/generate-stats"
+          exact
+          element={<GenerateStats />}
         />
 
         <Route path="/*" element={<Page404 />} />
