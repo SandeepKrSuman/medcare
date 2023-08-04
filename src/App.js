@@ -23,6 +23,9 @@ import AvailableDoctors from "./components/Dashboard/Staff/AvailableDoctors/Avai
 import BookAppointmentStaff from "./components/Dashboard/Staff/BookAppointment/BookAppointmentStaff";
 import CancelAppointment from "./components/Dashboard/Staff/CancelAppointment/CancelAppointment";
 import MakePaymentStaff from "./components/Dashboard/Staff/MakePayment/MakePaymentStaff";
+import FeedbacksDoc from "./components/Dashboard/Doctor/Feedbacks/Feedbacks";
+import DocAppointments from "./components/Dashboard/Doctor/Appointments/DocAppointments";
+import UploadPrescription from "./components/Dashboard/Doctor/UploadPrescription/UploadPrescription";
 
 function App() {
   return (
@@ -67,6 +70,21 @@ function App() {
 
         {/* Doctor Dashboard */}
         <Route path="/dashboard/doctor" exact element={<DoctorDash />} />
+        <Route
+          path="/dashboard/doctor/feedbacks"
+          exact
+          element={<FeedbacksDoc />}
+        />
+        <Route
+          path="/dashboard/doctor/appointments"
+          exact
+          element={<DocAppointments />}
+        />
+        <Route
+          path="/dashboard/doctor/upload-prescription"
+          exact
+          element={<UploadPrescription />}
+        />
 
         {/* Staff Dashboard */}
         <Route path="/dashboard/staff" exact element={<StaffDash />} />
