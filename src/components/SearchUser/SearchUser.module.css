@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+.subContainer {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 3% 7% 7% 7%;
+}
+
+.form {
+    width: 60%;
+    height: auto;
+}
+
+@media screen and (max-width: 767px) {
+    .subContainer {
+        max-width: 100%;
+        width: 100%;
+        padding-left: 3%;
+        padding-right: 3%;
+    }
+
+    .form {
+        width: 100%;
+    }
+}
