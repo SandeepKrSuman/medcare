@@ -19,6 +19,7 @@ import StaffList from "./components/Dashboard/Admin/StaffList/StaffList";
 import GenerateStats from "./components/Dashboard/Admin/GenerateStats/GenerateStats";
 import ViewFeedbacks from "./components/Dashboard/Admin/Feedbacks/ViewFeedbacks";
 import VerifyUser from "./components/Dashboard/Admin/VerifyUser/VerifyUser";
+import AvailableDoctors from "./components/Dashboard/Staff/AvailableDoctors/AvailableDoctors";
 
 function App() {
   return (
@@ -66,6 +67,11 @@ function App() {
 
         {/* Staff Dashboard */}
         <Route path="/dashboard/staff" exact element={<StaffDash />} />
+        <Route
+          path="/dashboard/staff/available-doctors"
+          exact
+          element={<AvailableDoctors />}
+        />
 
         {/* Admin Dashboard */}
         <Route path="/dashboard/admin" exact element={<AdminDash />} />
