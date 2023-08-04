@@ -7,8 +7,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Cancel, DoneOutline } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function VerificationCard(props) {
+  const navigate = useNavigate();
   return (
     <Card sx={{ maxWidth: "100%", textAlign: "center" }} variant="outlined">
       <CardContent>
@@ -35,8 +37,7 @@ export default function VerificationCard(props) {
             color="success"
             size="small"
             endIcon={<DoneOutline />}
-            // onClick={handleCancel}
-            // disabled={dateInPast() ? true : false}
+            onClick={() => navigate("/dashboard/admin/verify-user/addnew")}
           >
             Verify
           </Button>

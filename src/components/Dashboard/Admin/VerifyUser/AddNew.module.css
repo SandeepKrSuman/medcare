@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.formContainer {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 3% 7% 7% 7%;
+  max-width: 1024px;
+  width: 100%;
+}
+
+.form {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width: 100%;
+  }
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: "Montserrat", sans-serif;
+}
+
+.checkboxContainer {
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+  font-family: "Montserrat", sans-serif;
+}
+
+.submit {
+  background-color: #2196f3;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+  font-family: "Montserrat", sans-serif;
+}
+
+.submit:hover {
+  background-color: #1e88e5;
+}
+
+.col25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+.rrow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  .col25,
+  .col75,
+  .submit {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .formContainer {
+    width: 100%;
+    padding: 7% 3%;
+  }
+}
