@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Box, Avatar, Typography, TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css";
 import SelectInput from "../SelectInput/SelectInput";
+import api from "../../api";
 
 const options = ["Patient", "Staff", "Doctor"];
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const [user, setUser] = useState("Patient");
   const [department, setDepartment] = useState("");
   const [speciality, setSpeciality] = useState("");
@@ -15,21 +17,42 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(user);
-    speciality && console.log(speciality);
-    console.log(fname, " ", lname);
-    console.log(email);
-    console.log(password);
 
-    setUser("patient");
-    setSpeciality("");
-    setFname("");
-    setLname("");
-    setEmail("");
-    setPassword("");
+    const postData = {
+      userType: user,
+      fname,
+      lname,
+      department,
+      speciality,
+      email,
+      password,
+    };
+
+    try {
+      const res = await api.signup(postData);
+      if (res.data.error) {
+        alert(res.data.errorMsg);
+      } else {
+        setUser("Patient");
+        setDepartment("");
+        setSpeciality("");
+        setFname("");
+        setLname("");
+        setEmail("");
+        setPassword("");
+
+        alert(res.data.msg);
+
+        navigate("/signin");
+      }
+    } catch (error) {
+      alert(error.response?.data?.errorMsg || "An error occurred!");
+      console.error(error);
+    }
   };
+
   return (
     <div className={styles.container}>
       <Box

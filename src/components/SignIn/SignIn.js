@@ -1,20 +1,44 @@
 import React, { useState } from "react";
 import { Box, Avatar, Typography, TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import api from "../../api";
+import { useAuth } from "../../AuthContext";
 import styles from "./SignIn.module.css";
 
 export default function SignIn() {
+  const { setUserType } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(email);
-    console.log(password);
 
-    setEmail("");
-    setPassword("");
+    const postData = { email, password };
+
+    try {
+      const res = await api.signin(postData);
+
+      if (res.data.error) {
+        setEmail("");
+        setPassword("");
+        alert(res.data.errorMsg);
+      } else {
+        setEmail("");
+        setPassword("");
+        const loggedUser = res.data.userType;
+        const { accessToken, refreshToken } = res.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        setUserType(loggedUser);
+      }
+    } catch (error) {
+      setEmail("");
+      setPassword("");
+      alert(error?.response?.data?.errorMsg || "An Error Occured!");
+      console.error(error);
+    }
   };
+
   return (
     <div className={styles.container}>
       <Box
