@@ -1,31 +1,44 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
-import Page404 from "./components/Page404/Page404";
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
+import Page404 from "./components/Page404/Page404";
+
 import PatientDash from "./components/Dashboard/Patient/Patinet";
+import {
+  BookAppointment,
+  Feedbacks,
+  MakePayment,
+  MyAppointments,
+  Prescriptions,
+  ViewLocation,
+} from "./components/Dashboard/Patient/PatientTabs";
+
 import DoctorDash from "./components/Dashboard/Doctor/Doctor";
+import {
+  DocAppointments,
+  FeedbacksDoc,
+  UploadPrescription,
+} from "./components/Dashboard/Doctor/DoctorTabs";
+
 import StaffDash from "./components/Dashboard/Staff/Staff";
+import {
+  AvailableDoctors,
+  BookAppointmentStaff,
+  CancelAppointment,
+  MakePaymentStaff,
+} from "./components/Dashboard/Staff/StaffTabs";
+
 import AdminDash from "./components/Dashboard/Admin/Admin";
-import ViewLocation from "./components/Dashboard/Patient/ViewLocation/ViewLocation";
-import MakePayment from "./components/Dashboard/Patient/MakePayment/MakePayment";
-import BookAppointment from "./components/Dashboard/Patient/BookAppointment/BookAppointment";
-import MyAppointments from "./components/Dashboard/Patient/MyAppointments/MyAppointments";
-import Prescriptions from "./components/Dashboard/Patient/Prescriptions/Prescriptions";
-import Feedbacks from "./components/Dashboard/Patient/Feedbacks/Feedbacks";
-import DocList from "./components/Dashboard/Admin/DocList/DocList";
-import StaffList from "./components/Dashboard/Admin/StaffList/StaffList";
-import GenerateStats from "./components/Dashboard/Admin/GenerateStats/GenerateStats";
-import ViewFeedbacks from "./components/Dashboard/Admin/Feedbacks/ViewFeedbacks";
-import VerifyUser from "./components/Dashboard/Admin/VerifyUser/VerifyUser";
-import AvailableDoctors from "./components/Dashboard/Staff/AvailableDoctors/AvailableDoctors";
-import BookAppointmentStaff from "./components/Dashboard/Staff/BookAppointment/BookAppointmentStaff";
-import CancelAppointment from "./components/Dashboard/Staff/CancelAppointment/CancelAppointment";
-import MakePaymentStaff from "./components/Dashboard/Staff/MakePayment/MakePaymentStaff";
-import FeedbacksDoc from "./components/Dashboard/Doctor/Feedbacks/Feedbacks";
-import DocAppointments from "./components/Dashboard/Doctor/Appointments/DocAppointments";
-import UploadPrescription from "./components/Dashboard/Doctor/UploadPrescription/UploadPrescription";
+import {
+  DocList,
+  ViewFeedbacks,
+  GenerateStats,
+  StaffList,
+  VerifyUser,
+  AddNew,
+} from "./components/Dashboard/Admin/AdminTabs";
 
 function App() {
   return (
@@ -132,7 +145,13 @@ function App() {
           exact
           element={<VerifyUser />}
         />
+        <Route
+          path="/dashboard/admin/verify-user/addnew"
+          exact
+          element={<AddNew />}
+        />
 
+        {/* Unknown Routes */}
         <Route path="/*" element={<Page404 />} />
       </Routes>
     </Router>
