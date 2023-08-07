@@ -1,6 +1,8 @@
 import axios from "axios";
+const axiosInstance = axios.create();
 
-const baseUrl = "http://localhost:5000/api";
+const serverUrl = process.env.REACT_APP_SERVER || "http://localhost:5000";
+const baseUrl = `${serverUrl}/api`;
 
 axios.interceptors.request.use(
   (config) => {
@@ -15,33 +17,43 @@ axios.interceptors.request.use(
   }
 );
 
+const refresh = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  if (refreshToken) {
+    try {
+      const res = await axiosInstance.post(`${baseUrl}/auth/refresh`, {
+        refreshToken,
+      });
+      if (res.status === 200) {
+        localStorage.setItem("accessToken", res.data.accessToken);
+        return res.data.accessToken;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  return null;
+};
+
 axios.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
-    const refreshToken = localStorage.getItem("refreshToken");
-
-    if (
-      refreshToken &&
-      error.response.status === 401 &&
-      !originalRequest._retry
-    ) {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-
-      try {
-        const res = await axios.post(`${baseUrl}/auth/refresh`, {
-          refreshToken,
-        });
-
-        if (res.status === 200) {
-          localStorage.setItem("accessToken", res.data.accessToken);
-          return axios(originalRequest);
-        }
-      } catch (error) {
-        return Promise.reject(error);
+      const accessToken = await refresh();
+      if (accessToken) {
+        return axios(originalRequest);
+      } else {
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("accessToken");
+        window.location.href = "/signin";
       }
     }
-
     return Promise.reject(error);
   }
 );
