@@ -8,8 +8,12 @@ const AuthProvider = ({ children }) => {
 
   const [userType, setUserType] = useState(() => {
     if (token) {
-      const decodedToken = jwt_decode(token);
-      return decodedToken.userType || null;
+      try {
+        const decodedToken = jwt_decode(token);
+        return decodedToken.userType || null;
+      } catch (err) {
+        return null;
+      }
     } else {
       return null;
     }
