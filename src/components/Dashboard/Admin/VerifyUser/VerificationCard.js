@@ -7,16 +7,43 @@ import {
   Typography,
 } from "@mui/material";
 import { Cancel, DoneOutline } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
+import api from "../../../../api";
 
 export default function VerificationCard(props) {
   const navigate = useNavigate();
+
+  const handleVerify = () => {
+    navigate({
+      pathname: "/dashboard/admin/verify-user/addnew",
+      search: `?${createSearchParams({
+        uid: props.user.uid,
+      })}`,
+    });
+  };
+
+  const handleReject = async () => {
+    try {
+      const res = await api.reject({ data: { uid: props.user.uid } });
+      if (res.data.error) {
+        alert(res.data.errorMsg);
+      } else {
+        if (!alert(res.data.msg)) {
+          window.location.reload();
+        }
+      }
+    } catch (error) {
+      alert(error.response.data.errorMsg);
+      console.log(error);
+    }
+  };
+
   return (
     <Card sx={{ maxWidth: "100%", textAlign: "center" }} variant="outlined">
       <CardContent>
         <br />
         <Typography variant="h5" component="div">
-          {props.user.name}
+          {`${props.user.fname} ${props.user.lname}`}
         </Typography>
         <Typography sx={{ mb: 2.5, fontSize: "0.8rem" }} color="text.secondary">
           {props.user.email}
@@ -24,7 +51,7 @@ export default function VerificationCard(props) {
         <Typography
           sx={{ mb: 1.5, fontSize: "1rem" }}
           color="text.secondary"
-        >{`Position Applied for: ${props.user.role}`}</Typography>
+        >{`Position Applied for: ${props.user.userType}`}</Typography>
         <Typography sx={{ mb: 1.5, fontSize: "0.8rem" }} color="text.secondary">
           {props.user.department
             ? `Department of ${props.user.department}`
@@ -37,7 +64,7 @@ export default function VerificationCard(props) {
             color="success"
             size="small"
             endIcon={<DoneOutline />}
-            onClick={() => navigate("/dashboard/admin/verify-user/addnew")}
+            onClick={handleVerify}
           >
             Verify
           </Button>
@@ -46,8 +73,7 @@ export default function VerificationCard(props) {
             color="error"
             size="small"
             endIcon={<Cancel />}
-            // onClick={handleCancel}
-            // disabled={dateInPast() ? true : false}
+            onClick={handleReject}
           >
             Reject
           </Button>

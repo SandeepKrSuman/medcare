@@ -74,6 +74,30 @@ const api = {
   logout: (body) => {
     return axios.delete(`${baseUrl}/auth/logout`, body);
   },
+
+  unverified: () => {
+    return axios.get(`${baseUrl}/users/unverified`);
+  },
+
+  findUser: (body) => {
+    return axios.post(`${baseUrl}/users/finduser`, body);
+  },
+
+  verify: (body) => {
+    return axios.post(`${baseUrl}/users/unverified/verify`, body);
+  },
+
+  reject: (body) => {
+    return axios.delete(`${baseUrl}/users/unverified/reject`, body);
+  },
+
+  docList: () => {
+    return axios.get(`${baseUrl}/users/doctors`);
+  },
+
+  staffList: () => {
+    return axios.get(`${baseUrl}/users/staffs`);
+  },
 };
 
 export default api;

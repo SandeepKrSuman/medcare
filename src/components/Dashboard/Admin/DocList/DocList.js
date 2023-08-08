@@ -4,81 +4,41 @@ import Navbar from "../../../Navbar/Navbar";
 import DocListCard from "./DocListCard";
 import SelectInput from "../../../SelectInput/SelectInput";
 import styles from "./DocList.module.css";
-
-const appointments = [
-  {
-    doctor: "Dr. A. K. Arya",
-    speciality: "MBBS, Surgeon",
-    department: "Gastrology",
-    days: ["Mon", "Tue", "Wed"],
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: false,
-  },
-  {
-    doctor: "Dr. S. K. Choudhary",
-    speciality: "MBBS, Surgeon",
-    department: "Cardiology",
-    days: ["Mon", "Tue", "Wed"],
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: false,
-  },
-  {
-    doctor: "Dr. B. K. Pandit",
-    speciality: "MBBS, Surgeon",
-    department: "Gastrology",
-    days: ["Thu", "Fri", "Sat"],
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: true,
-  },
-  {
-    doctor: "Dr. Mukharjee",
-    speciality: "MBBS, Surgeon",
-    department: "Cardiology",
-    days: ["Fri", "Sat", "Sun"],
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: true,
-  },
-  {
-    doctor: "Dr. Dwarka Prasad",
-    speciality: "MBBS, Surgeon",
-    department: "Cardiology",
-    days: ["Mon", "Tue", "Wed"],
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: true,
-  },
-  {
-    doctor: "Dr. Dwarka Prasad",
-    speciality: "MBBS, Surgeon",
-    department: "Neurology",
-    days: ["Wed", "Thu", "Fri"],
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: false,
-  },
-];
+import api from "../../../../api";
 
 const options = ["All Departments", "Cardiology", "Gastrology", "Neurology"];
 
 export default function DocList() {
   const [department, setDepartment] = useState("All Departments");
-  const [apmt, setApmt] = useState(appointments);
+  const [docs, setDocs] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+
+  useEffect(() => {
+    async function fetchDocs() {
+      try {
+        const res = await api.docList();
+        if (res.data.error) {
+          alert(res.data.errorMsg);
+        } else {
+          setDocs(res.data);
+        }
+      } catch (error) {
+        alert(error?.response?.data?.errorMsg || "An Error Occured!");
+        console.error(error);
+      }
+    }
+
+    fetchDocs();
+  }, []);
 
   useEffect(() => {
     if (department === "All Departments") {
-      setApmt(appointments);
+      setDoctors(docs);
     } else {
-      const filteredData = appointments.filter(
-        (appointment) =>
-          appointment.department === department
-      );
-      setApmt(filteredData);
+      const filteredData = docs.filter((doc) => doc.department === department);
+      setDoctors(filteredData);
     }
-  }, [department]);
+  }, [department, docs]);
 
   return (
     <div className={styles.container}>
@@ -93,9 +53,9 @@ export default function DocList() {
       </div>
       <div className={styles.cardContainer}>
         <Grid container spacing={3}>
-          {apmt.map((appointment, index) => (
+          {doctors.map((doctor, index) => (
             <Grid key={index} item xs={12} md={6} lg={4}>
-              <DocListCard appointment={appointment} />
+              <DocListCard doctor={doctor} />
             </Grid>
           ))}
         </Grid>

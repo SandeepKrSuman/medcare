@@ -161,7 +161,6 @@ function App() {
 
         {userType === "Admin" && (
           <Fragment>
-            {" "}
             <Route path="/dashboard/admin" exact element={<AdminDash />} />
             <Route
               path="/dashboard/admin/doc-list"

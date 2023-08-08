@@ -1,17 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./AddNew.module.css";
 import Navbar from "../../../Navbar/Navbar";
+import { useSearchParams } from "react-router-dom";
+import api from "../../../../api";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function AddNew() {
-  const [userType, setUserType] = useState("doctor");
+  const [searchParams] = useSearchParams();
+  const [userType, setUserType] = useState("");
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("demo@email.com");
+  const [email, setEmail] = useState("");
   const [workDays, setWorkDays] = useState([]);
+  const [time, setTime] = useState("");
   const [department, setDepartment] = useState("");
   const [speciality, setSpeciality] = useState("");
   const [fee, setFee] = useState("");
+
+  useEffect(() => {
+    async function findUser(uid) {
+      try {
+        const res = await api.findUser({ uid });
+        if (res.data.error) {
+          alert(res.data.errorMsg);
+        } else {
+          setUserType(res.data.userType || "");
+          setFullName(`${res.data.fname || ""} ${res.data.lname || ""}`);
+          setEmail(res.data.email || "");
+          setWorkDays(res.data.workDays || []);
+          setTime(res.data.time || "");
+          setDepartment(res.data.department || "");
+          setSpeciality(res.data.speciality || "");
+          setFee(res.data.fee || "");
+        }
+      } catch (error) {
+        alert(error?.response?.data?.errorMsg || "An Error Occured!");
+        console.error(error);
+      }
+    }
+    const uid = searchParams.get("uid");
+    findUser(uid);
+  }, [searchParams]);
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
@@ -24,10 +53,27 @@ export default function AddNew() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(userType, fullName, email, department, speciality, fee);
-    console.log(workDays);
+    const uid = searchParams.get("uid");
+    try {
+      const res = await api.verify({
+        uid,
+        workDays,
+        time,
+        department,
+        speciality,
+        fee,
+      });
+      if (res.data.error) {
+        alert(res.data.errorMsg);
+      } else {
+        alert(res.data.msg);
+      }
+    } catch (error) {
+      alert(error?.response?.data?.errorMsg || "An Error Occured!");
+      console.error(error);
+    }
   };
 
   return (
@@ -78,9 +124,9 @@ export default function AddNew() {
                 id="fullname"
                 name="fullname"
                 value={fullName}
-                onChange={(event) => setFullName(event.target.value)}
                 placeholder="Full Name ..."
                 autoComplete="off"
+                disabled={true}
                 required
               />
             </div>
@@ -105,7 +151,25 @@ export default function AddNew() {
               </div>
             </div>
           </div>
-          {userType === "doctor" && (
+          <div className={styles.rrow}>
+            <div className={styles.col25}>
+              <label htmlFor="time">Time</label>
+            </div>
+            <div className={styles.col75}>
+              <input
+                className={styles.input}
+                type="text"
+                id="time"
+                name="time"
+                value={time}
+                onChange={(event) => setTime(event.target.value)}
+                placeholder="time ..."
+                autoComplete="off"
+                required
+              />
+            </div>
+          </div>
+          {userType === "Doctor" && (
             <>
               <div className={styles.rrow}>
                 <div className={styles.col25}>
