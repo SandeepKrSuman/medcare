@@ -98,6 +98,22 @@ const api = {
   staffList: () => {
     return axios.get(`${baseUrl}/users/staffs`);
   },
+
+  bookAppointment: (body) => {
+    return axios.post(`${baseUrl}/appointment/book`, body);
+  },
+
+  duePayment: (body) => {
+    return axios.post(`${baseUrl}/appointment/duepayment`, body);
+  },
+
+  myAppointments: (body) => {
+    return axios.post(`${baseUrl}/patient/appointments`, body);
+  },
+
+  cancelAppointment: (body) => {
+    return axios.post(`${baseUrl}/appointment/cancel`, body);
+  },
 };
 
 export default api;

@@ -7,8 +7,26 @@ import {
   Typography,
 } from "@mui/material";
 import { Cancel, Contactless, Feedback } from "@mui/icons-material";
+import api from "../../../../api";
 
 export default function AppointmentCard(props) {
+  const handleCancel = async () => {
+    const aptid = props.appointment.aptid;
+    try {
+      const res = await api.cancelAppointment({ aptid });
+      if (res.data.error) {
+        alert(res.data.errorMsg);
+      } else {
+        if (!alert(res.data.msg)) {
+          window.location.reload();
+        }
+      }
+    } catch (error) {
+      alert(error?.response?.data?.errorMsg || "An Error Occured!");
+      console.error(error);
+    }
+  };
+
   return (
     <Card sx={{ maxWidth: "100%", textAlign: "center" }} variant="outlined">
       <CardContent>
@@ -21,10 +39,10 @@ export default function AppointmentCard(props) {
           Appointment with
         </Typography>
         <Typography variant="h5" component="div">
-          {props.appointment.doctor}
+          {props.appointment.docname}
         </Typography>
         <Typography sx={{ mb: 2.5, fontSize: "0.8rem" }} color="text.secondary">
-          {`(${props.appointment.speciality})`}
+          {props.appointment.speciality}
         </Typography>
         <Typography
           sx={{ mb: 1.5, fontSize: "1rem" }}
@@ -37,8 +55,8 @@ export default function AppointmentCard(props) {
             color="error"
             size="small"
             endIcon={<Cancel />}
-            // onClick={handleCancel}
-            // disabled={dateInPast() ? true : false}
+            onClick={handleCancel}
+            disabled={props.appointment.cancel || props.appointment.payment}
           >
             Cancel
           </Button>
@@ -48,7 +66,7 @@ export default function AppointmentCard(props) {
             size="small"
             endIcon={<Contactless />}
             // onClick={handleCancel}
-            // disabled={dateInPast() ? true : false}
+            disabled={props.appointment.payment}
           >
             Payment
           </Button>

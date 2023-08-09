@@ -5,27 +5,79 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import api from "../../../../api";
+
+const getDate = (inputDate) => {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const date = new Date(inputDate);
+  const day = date.getUTCDate();
+  const month = months[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
+
+  return `${day} ${month} ${year}`;
+};
 
 export default function BookingCard(props) {
+  const navigate = useNavigate();
+  const handleClick = async () => {
+    try {
+      const postData = {
+        patid: jwt_decode(localStorage.getItem("accessToken")).uid,
+        docid: props.doctor.uid,
+        patname: jwt_decode(localStorage.getItem("accessToken")).name,
+        docname: `Dr. ${props.doctor.fname} ${props.doctor.lname}`,
+        speciality: props.doctor.speciality,
+        date: getDate(props.aptDate),
+        time: props.doctor.time,
+        fee: props.doctor.fee,
+      };
+      const res = await api.bookAppointment(postData);
+      if (res.data.error) {
+        alert(res.data.errorMsg);
+      } else {
+        navigate("/dashboard/patient/make-payment");
+      }
+    } catch (error) {
+      alert(error?.response?.data?.errorMsg);
+      console.log(error);
+    }
+  };
+
   return (
     <Card sx={{ maxWidth: "100%", textAlign: "center" }} variant="outlined">
       <CardContent>
         <br />
         <Typography variant="h5" component="div">
-          {props.appointment.doctor}
+          {`Dr. ${props.doctor.fname} ${props.doctor.lname}`}
         </Typography>
         <Typography sx={{ mb: 0.5, fontSize: "0.8rem" }} color="text.secondary">
-          {props.appointment.speciality}
+          {props.doctor.speciality}
         </Typography>
         <Typography sx={{ mb: 3, fontSize: "0.9rem" }} color="text.secondary">
-          {`Department of ${props.appointment.department}`}
+          {`Department of ${props.doctor.department}`}
         </Typography>
         <Typography
           variant="subtitle1"
           sx={{ mb: 1.5 }}
           color="rgba(0, 0, 0, 0.26)"
         >
-          {props.appointment.days.join(" | ")}
+          {props.doctor.workDays.join(" | ")}
         </Typography>
         <br />
         <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
@@ -33,7 +85,7 @@ export default function BookingCard(props) {
             variant="contained"
             color="warning"
             endIcon={<AddTaskIcon />}
-            //   onClick={handleClick}
+            onClick={handleClick}
           >
             BOOK
           </Button>

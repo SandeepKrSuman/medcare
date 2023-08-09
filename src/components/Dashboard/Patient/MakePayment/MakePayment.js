@@ -1,55 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import DuePaymentCard from "./DuePaymentCard";
 import styles from "./MakePayment.module.css";
-
-const appointments = [
-  {
-    doctor: "Dr. A. K. Arya",
-    speciality: "MBBS, Surgeon",
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: false,
-  },
-  {
-    doctor: "Dr. S. K. Choudhary",
-    speciality: "MBBS, Surgeon",
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: false,
-  },
-  {
-    doctor: "Dr. B. K. Pandit",
-    speciality: "MBBS, Surgeon",
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: true,
-  },
-  {
-    doctor: "Dr. Mukharjee",
-    speciality: "MBBS, Surgeon",
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: true,
-  },
-  {
-    doctor: "Dr. Dwarka Prasad",
-    speciality: "MBBS, Surgeon",
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: true,
-  },
-  {
-    doctor: "Dr. Dwarka Prasad",
-    speciality: "MBBS, Surgeon",
-    date: "30 Jan 2023",
-    time: "6pM - 7pM",
-    payment: false,
-  },
-];
+import jwt_decode from "jwt-decode";
+import api from "../../../../api";
 
 export default function MakePayment() {
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    async function fetchUnpaid() {
+      try {
+        const uid = jwt_decode(localStorage.getItem("accessToken")).uid;
+        const res = await api.duePayment({ uid });
+        if (res.data.error) {
+          alert(res.data.errorMsg);
+        } else {
+          setAppointments(res.data.reverse());
+        }
+      } catch (error) {
+        alert(error?.response?.data?.errorMsg);
+        console.log(error);
+      }
+    }
+    fetchUnpaid();
+  }, []);
+
   return (
     <div className={styles.container}>
       <Navbar />
