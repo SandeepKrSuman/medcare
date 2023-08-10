@@ -114,6 +114,10 @@ const api = {
   cancelAppointment: (body) => {
     return axios.post(`${baseUrl}/appointment/cancel`, body);
   },
+
+  prescriptions: (body) => {
+    return axios.post(`${baseUrl}/patient/prescriptions`, body);
+  },
 };
 
 export default api;

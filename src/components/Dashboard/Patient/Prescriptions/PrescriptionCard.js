@@ -13,10 +13,10 @@ export default function AppointmentCard(props) {
           Prescription By
         </Typography>
         <Typography variant="h5" component="div">
-          {props.appointment.doctor}
+          {props.prescription.docname}
         </Typography>
         <Typography variant="caption" color="text.secondary" component="div">
-          {`appointment on: ${props.appointment.date}`}
+          {`appointment on: ${props.prescription.date}`}
         </Typography>
         <br /> <br />
         <Fab
