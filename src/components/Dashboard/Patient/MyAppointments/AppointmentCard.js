@@ -8,8 +8,11 @@ import {
 } from "@mui/material";
 import { Cancel, Contactless, Feedback } from "@mui/icons-material";
 import api from "../../../../api";
+import { useNavigate } from "react-router-dom";
 
 export default function AppointmentCard(props) {
+  const navigate = useNavigate();
+
   const handleCancel = async () => {
     const aptid = props.appointment.aptid;
     try {
@@ -60,16 +63,28 @@ export default function AppointmentCard(props) {
           >
             Cancel
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            endIcon={<Contactless />}
-            // onClick={handleCancel}
-            disabled={props.appointment.payment}
-          >
-            Payment
-          </Button>
+          {props.appointment.completed ? (
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              endIcon={<Feedback />}
+              onClick={() => navigate("/dashboard/patient/feedbacks")}
+            >
+              Feedback
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              endIcon={<Contactless />}
+              onClick={() => navigate("/dashboard/patient/make-payment")}
+              disabled={props.appointment.cancel || props.appointment.payment}
+            >
+              Payment
+            </Button>
+          )}
         </CardActions>
       </CardContent>
     </Card>

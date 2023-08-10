@@ -5,11 +5,21 @@
     align-items: center;
 }
 
+.filterContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 3%;
+    gap: 50px;
+}
+
 .cardContainer {
     display: flex;
     flex: 1;
     justify-content: center;
     align-items: center;
+    width: 100%;
     max-width: 900px;
     padding: 7%;
 }
