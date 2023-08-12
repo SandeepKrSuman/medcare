@@ -107,6 +107,10 @@ const api = {
     return axios.post(`${baseUrl}/appointment/duepayment`, body);
   },
 
+  makePayment: (body) => {
+    return axios.post(`${baseUrl}/appointment/duepayment/makepayment`, body);
+  },
+
   myAppointments: (body) => {
     return axios.post(`${baseUrl}/patient/appointments`, body);
   },
@@ -117,6 +121,14 @@ const api = {
 
   prescriptions: (body) => {
     return axios.post(`${baseUrl}/patient/prescriptions`, body);
+  },
+
+  writeFeedback: (body) => {
+    return axios.post(`${baseUrl}/patient/appointments/feedbacks/write`, body);
+  },
+
+  deleteFeedback: (body) => {
+    return axios.post(`${baseUrl}/patient/appointments/feedbacks/delete`, body);
   },
 
   docAppointments: (body) => {

@@ -7,8 +7,45 @@ import {
   Typography,
 } from "@mui/material";
 import { Contactless, DoNotDisturb } from "@mui/icons-material";
+import api from "../../../../api";
 
 export default function DuePaymentCard(props) {
+  const handlePayment = async () => {
+    const aptid = props.appointment.aptid;
+    if (!alert("Making a demo payment ...")) {
+      try {
+        const res = await api.makePayment({ aptid });
+        if (res.data.error) {
+          alert(res.data.errorMsg);
+        } else {
+          if (!alert(res.data.msg)) {
+            window.location.reload();
+          }
+        }
+      } catch (error) {
+        alert(error?.response?.data?.errorMsg || "An Error Occured!");
+        console.error(error);
+      }
+    }
+  };
+
+  const handleCancel = async () => {
+    const aptid = props.appointment.aptid;
+    try {
+      const res = await api.cancelAppointment({ aptid });
+      if (res.data.error) {
+        alert(res.data.errorMsg);
+      } else {
+        if (!alert(res.data.msg)) {
+          window.location.reload();
+        }
+      }
+    } catch (error) {
+      alert(error?.response?.data?.errorMsg || "An Error Occured!");
+      console.error(error);
+    }
+  };
+
   return (
     <Card sx={{ maxWidth: "100%", textAlign: "center" }} variant="outlined">
       <CardContent>
@@ -41,8 +78,7 @@ export default function DuePaymentCard(props) {
             color="primary"
             size="small"
             endIcon={<Contactless />}
-            // onClick={handleCancel}
-            // disabled={dateInPast() ? true : false}
+            onClick={handlePayment}
           >
             Pay Now
           </Button>
@@ -51,8 +87,7 @@ export default function DuePaymentCard(props) {
             color="error"
             size="small"
             startIcon={<DoNotDisturb />}
-            // onClick={handleCancel}
-            // disabled={dateInPast() ? true : false}
+            onClick={handleCancel}
           >
             Cancel
           </Button>
