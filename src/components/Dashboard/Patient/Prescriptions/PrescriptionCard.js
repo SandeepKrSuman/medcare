@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Fab from "@mui/material/Fab";
 import FileDownload from "@mui/icons-material/FileDownload";
 
-export default function AppointmentCard(props) {
+export default function PrescriptionCard(props) {
   return (
     <Card sx={{ maxWidth: "100%", textAlign: "center" }} variant="outlined">
       <CardContent>
@@ -15,12 +15,20 @@ export default function AppointmentCard(props) {
         <Typography variant="h5" component="div">
           {props.prescription.docname}
         </Typography>
-        <Typography variant="caption" color="text.secondary" component="div">
+        <Typography
+          sx={{ mb: 1.5 }}
+          variant="caption"
+          color="text.secondary"
+          component="div"
+        >
           {`appointment on: ${props.prescription.date}`}
+        </Typography>
+        <Typography variant="caption" color="#96B6C5" component="div">
+          {`prescribed on: ${props.prescription.pdate}`}
         </Typography>
         <br /> <br />
         <Fab
-          href={`https://mhc-pms-server.herokuapp.com`}
+          href={props.prescription.file}
           download="my-prescription"
           color="primary"
           variant="extended"
