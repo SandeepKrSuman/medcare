@@ -14,7 +14,7 @@ export default function AppointmentCard(props) {
           Your Appointment with Patient
         </Typography>
         <Typography sx={{ mb: 2 }} variant="h6" component="div">
-          {props.appointment.doctor}
+          {props.appointment.patname}
         </Typography>
         <Typography sx={{ fontSize: "1rem" }} color="text.secondary">
           {props.appointment.date}

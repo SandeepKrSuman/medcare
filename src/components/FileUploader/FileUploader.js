@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import PublishIcon from "@mui/icons-material/Publish";
 import FormGroup from "@mui/material/FormGroup";
 import Typography from "@mui/material/Typography";
+import api from "../../api";
 
 const Input = styled("input")({
   display: "none",
@@ -36,13 +37,32 @@ export default function FileUploader(props) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append("pemail", props.pemail);
-    // formData.append("demail", props.demail);
-    // formData.append("doa", props.doa);
-    // formData.append("prescriptionFile", file);
 
-    console.log(file);
+    const formData = new FormData();
+    formData.append("aptid", props.appointment.aptid);
+    formData.append("patid", props.appointment.patid);
+    formData.append("docid", props.appointment.docid);
+    formData.append("patname", props.appointment.patname);
+    formData.append("docname", props.appointment.docname);
+    formData.append("date", props.appointment.date);
+    formData.append("file", file);
+
+    try {
+      const res = await api.uploadPrescription(formData);
+
+      if (res.data.error) {
+        alert(res.data.errorMsg);
+      } else {
+        setFileName(null);
+        setErrFileName(null);
+        if (!alert(res.data.msg)) {
+          window.location.reload();
+        }
+      }
+    } catch (error) {
+      alert(error.response.data.errorMsg);
+      console.log(error);
+    }
   }
 
   return (

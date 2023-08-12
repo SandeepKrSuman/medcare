@@ -12,13 +12,13 @@ export default function UploadPrescriptionCard(props) {
           Prescription to
         </Typography>
         <Typography variant="h5" component="div">
-          {props.patient}
+          {props.appointment.patname}
         </Typography>
         <Typography variant="caption" color="text.secondary" component="div">
-          {`appointment on: ${props.date}`}
+          {`appointment on: ${props.appointment.date}`}
         </Typography>
         <br /> <br />
-        <FileUploader useKey={props.useKey} />
+        <FileUploader appointment={props.appointment} useKey={props.useKey} />
       </CardContent>
     </Card>
   );

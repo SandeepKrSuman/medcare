@@ -118,6 +118,14 @@ const api = {
   prescriptions: (body) => {
     return axios.post(`${baseUrl}/patient/prescriptions`, body);
   },
+
+  docAppointments: (body) => {
+    return axios.post(`${baseUrl}/doctor/appointments`, body);
+  },
+
+  uploadPrescription: (body) => {
+    return axios.post(`${baseUrl}/doctor/prescription/upload`, body);
+  },
 };
 
 export default api;
