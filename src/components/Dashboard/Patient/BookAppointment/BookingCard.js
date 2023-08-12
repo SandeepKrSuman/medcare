@@ -44,7 +44,6 @@ export default function BookingCard(props) {
         docname: `Dr. ${props.doctor.fname} ${props.doctor.lname}`,
         speciality: props.doctor.speciality,
         doa: props.aptDate,
-        payment: true,
         date: getDate(props.aptDate),
         time: props.doctor.time,
         fee: props.doctor.fee,
