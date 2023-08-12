@@ -1,5 +1,5 @@
 import DocAppointments from "./Appointments/DocAppointments";
-import FeedbacksDoc from "./Feedbacks/Feedbacks";
+import DocFeedbacks from "./Feedbacks/DocFeedbacks";
 import UploadPrescription from "./UploadPrescription/UploadPrescription";
 
-export { DocAppointments, FeedbacksDoc, UploadPrescription };
+export { DocAppointments, UploadPrescription, DocFeedbacks };

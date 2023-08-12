@@ -7,7 +7,6 @@ const tabs = [
     title: "Upload Prescription",
     redirect: "/dashboard/doctor/upload-prescription",
   },
-  { title: "Take a Leave", redirect: "/dashboard/doctor/take-a-leave" },
   { title: "Feedbacks", redirect: "/dashboard/doctor/feedbacks" },
 ];
 

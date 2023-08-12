@@ -24,7 +24,7 @@ import {
 import DoctorDash from "./components/Dashboard/Doctor/Doctor";
 import {
   DocAppointments,
-  FeedbacksDoc,
+  DocFeedbacks,
   UploadPrescription,
 } from "./components/Dashboard/Doctor/DoctorTabs";
 
@@ -114,7 +114,7 @@ function App() {
             <Route
               path="/dashboard/doctor/feedbacks"
               exact
-              element={<FeedbacksDoc />}
+              element={<DocFeedbacks />}
             />
             <Route
               path="/dashboard/doctor/appointments"
