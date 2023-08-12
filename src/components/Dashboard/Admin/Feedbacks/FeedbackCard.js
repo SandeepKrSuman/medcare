@@ -12,11 +12,25 @@ export default function FeedbackCard(props) {
           {props.feedback.review}
         </Typography>
         <Typography
-          sx={{ mb: 1.5, fontSize: 14 }}
+          sx={{ mb: 1, fontSize: 14 }}
           color="text.secondary"
           gutterBottom
         >
-          {props.feedback.email}
+          {`Patient: ${props.feedback.patname}`}
+        </Typography>
+        <Typography
+          sx={{ mb: 1, fontSize: 14 }}
+          color="text.secondary"
+          gutterBottom
+        >
+          {`Doctor: ${props.feedback.docname}`}
+        </Typography>
+        <Typography
+          sx={{ mb: 2.5, fontSize: 14 }}
+          color="text.secondary"
+          gutterBottom
+        >
+          {`Appointment: ${props.feedback.date}`}
         </Typography>
         <Rating name="read-only" value={props.feedback.rating} readOnly />
         <br />

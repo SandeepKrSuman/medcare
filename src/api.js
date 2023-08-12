@@ -99,6 +99,14 @@ const api = {
     return axios.get(`${baseUrl}/users/staffs`);
   },
 
+  getFeedbacks: () => {
+    return axios.get(`${baseUrl}/users/feedbacks`);
+  },
+
+  generateStats: () => {
+    return axios.get(`${baseUrl}/generate/stats`);
+  },
+
   bookAppointment: (body) => {
     return axios.post(`${baseUrl}/appointment/book`, body);
   },
