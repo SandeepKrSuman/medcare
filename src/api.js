@@ -150,6 +150,10 @@ const api = {
   docFeedbacks: (body) => {
     return axios.post(`${baseUrl}/doctor/appointments/feedbacks`, body);
   },
+
+  findPatient: (body) => {
+    return axios.post(`${baseUrl}/staff/find/patient`, body);
+  },
 };
 
 export default api;

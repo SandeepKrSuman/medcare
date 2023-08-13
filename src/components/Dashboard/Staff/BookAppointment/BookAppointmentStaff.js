@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import SearchUser from "../../../SearchUser/SearchUser";
-import BookAppointment from "../../Patient/BookAppointment/BookAppointment";
+import BookAppointment from "./BookAppointment";
 
 export default function BookAppointmentStaff() {
   const [userFound, setUserFound] = useState(false);
+  const [patid, setPatid] = useState("");
+  const [patname, setPatname] = useState("");
 
   return userFound ? (
-    <BookAppointment />
+    <BookAppointment patid={patid} patname={patname} />
   ) : (
-    <SearchUser setUserFound={setUserFound} />
+    <SearchUser
+      heading="Book Appointment"
+      setUserFound={setUserFound}
+      setPatid={setPatid}
+      setPatname={setPatname}
+    />
   );
 }

@@ -2,40 +2,24 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    min-height: 100vh;
-}
-
-.tabHeading {
-    width: 100%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 40px 3%;
-    gap: 50px;
 }
 
-.subContainer {
+.cardContainer {
     display: flex;
     flex: 1;
     justify-content: center;
     align-items: center;
-    padding: 3% 7% 7% 7%;
-}
-
-.form {
-    width: 60%;
-    height: auto;
+    width: 100%;
+    max-width: 900px;
+    padding: 7%;
 }
 
 @media screen and (max-width: 767px) {
-    .subContainer {
+    .cardContainer {
         max-width: 100%;
         width: 100%;
         padding-left: 3%;
         padding-right: 3%;
-    }
-
-    .form {
-        width: 100%;
     }
 }

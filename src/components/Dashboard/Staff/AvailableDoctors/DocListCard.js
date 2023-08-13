@@ -9,7 +9,7 @@ export default function DocListCard(props) {
       <CardContent>
         <br />
         <Typography variant="h5" component="div">
-          {props.doctor.name}
+          {`Dr. ${props.doctor.fname} ${props.doctor.lname}`}
         </Typography>
         <Typography sx={{ mb: 0.5, fontSize: "0.8rem" }} color="text.secondary">
           {props.doctor.speciality}
@@ -22,7 +22,7 @@ export default function DocListCard(props) {
           sx={{ mb: 1.5 }}
           color="rgba(0, 0, 0, 0.26)"
         >
-          {props.doctor.days.join(" | ")}
+          {props.doctor.workDays.join(" | ")}
         </Typography>
         <br />
       </CardContent>

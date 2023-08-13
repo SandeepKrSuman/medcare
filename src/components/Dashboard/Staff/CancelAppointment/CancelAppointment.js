@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import SearchUser from "../../../SearchUser/SearchUser";
-import MyAppointments from "../../Patient/MyAppointments/MyAppointments";
+import Appointments from "./Appointments";
 
 export default function CancelAppointment() {
   const [userFound, setUserFound] = useState(false);
+  const [patid, setPatid] = useState("");
+  const [patname, setPatname] = useState("");
 
   return userFound ? (
-    <MyAppointments />
+    <Appointments patid={patid} patname={patname} />
   ) : (
-    <SearchUser setUserFound={setUserFound} />
+    <SearchUser
+      heading="Cancel Appointment"
+      setUserFound={setUserFound}
+      setPatid={setPatid}
+      setPatname={setPatname}
+    />
   );
 }
