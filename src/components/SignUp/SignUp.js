@@ -4,10 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css";
 import SelectInput from "../SelectInput/SelectInput";
 import api from "../../api";
+import { useAuth } from "../../AuthContext";
 
 const options = ["Patient", "Staff", "Doctor"];
 
 export default function SignUp() {
+  const { setLoader } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState("Patient");
   const [department, setDepartment] = useState("");
@@ -31,10 +33,13 @@ export default function SignUp() {
     };
 
     try {
+      setLoader(true);
       const res = await api.signup(postData);
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         setUser("Patient");
         setDepartment("");
         setSpeciality("");
@@ -48,6 +53,7 @@ export default function SignUp() {
         navigate("/signin");
       }
     } catch (error) {
+      setLoader(false);
       alert(error.response?.data?.errorMsg || "An error occurred!");
       console.error(error);
     }

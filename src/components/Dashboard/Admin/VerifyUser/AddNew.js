@@ -3,10 +3,12 @@ import styles from "./AddNew.module.css";
 import Navbar from "../../../Navbar/Navbar";
 import { useSearchParams } from "react-router-dom";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function AddNew() {
+  const { setLoader } = useAuth();
   const [searchParams] = useSearchParams();
   const [userType, setUserType] = useState("");
   const [fullName, setFullName] = useState("");
@@ -20,10 +22,13 @@ export default function AddNew() {
   useEffect(() => {
     async function findUser(uid) {
       try {
+        setLoader(true);
         const res = await api.findUser({ uid });
         if (res.data.error) {
+          setLoader(false);
           alert(res.data.errorMsg);
         } else {
+          setLoader(false);
           setUserType(res.data.userType || "");
           setFullName(`${res.data.fname || ""} ${res.data.lname || ""}`);
           setEmail(res.data.email || "");
@@ -34,13 +39,14 @@ export default function AddNew() {
           setFee(res.data.fee || "");
         }
       } catch (error) {
+        setLoader(false);
         alert(error?.response?.data?.errorMsg || "An Error Occured!");
         console.error(error);
       }
     }
     const uid = searchParams.get("uid");
     findUser(uid);
-  }, [searchParams]);
+  }, [searchParams, setLoader]);
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
@@ -57,6 +63,7 @@ export default function AddNew() {
     event.preventDefault();
     const uid = searchParams.get("uid");
     try {
+      setLoader(true);
       const res = await api.verify({
         uid,
         workDays,
@@ -66,11 +73,14 @@ export default function AddNew() {
         fee,
       });
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         alert(res.data.msg);
       }
     } catch (error) {
+      setLoader(false);
       alert(error?.response?.data?.errorMsg || "An Error Occured!");
       console.error(error);
     }

@@ -11,17 +11,20 @@ export default function Navbar() {
   const navigate = useNavigate();
   const token = localStorage.getItem("accessToken");
   const userName = token ? jwt_decode(token)?.name : null;
-  const { setUserType } = useAuth();
+  const { setUserType, setLoader } = useAuth();
 
   const handleLogOut = async () => {
     try {
+      setLoader(true);
       const refreshToken = localStorage.getItem("refreshToken");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       await api.logout({ data: { refreshToken } });
+      setLoader(false);
       setUserType(null);
       navigate("/");
     } catch (error) {
+      setLoader(false);
       alert(error?.response?.data?.error || "An Error Occured!");
       console.error(error);
     }

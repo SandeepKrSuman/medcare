@@ -9,8 +9,10 @@ import Button from "@mui/material/Button";
 import { Fab, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 export default function FeedbackCard(props) {
+  const { setLoader } = useAuth();
   const [value, setValue] = useState(props.appointment?.rating || 0);
   const [feedbackText, setFeedbackText] = useState(
     props.appointment?.review || ""
@@ -21,19 +23,23 @@ export default function FeedbackCard(props) {
 
   const handleSubmit = async () => {
     try {
+      setLoader(true);
       const res = await api.writeFeedback({
         aptid: props.appointment.aptid,
         review: feedbackText,
         rating: value,
       });
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         if (!alert(res.data.msg)) {
           window.location.reload();
         }
       }
     } catch (error) {
+      setLoader(false);
       alert(error?.response?.errorMsg);
       console.error(error);
     }
@@ -41,17 +47,21 @@ export default function FeedbackCard(props) {
 
   const handleDelete = async () => {
     try {
+      setLoader(true);
       const res = await api.deleteFeedback({
         aptid: props.appointment.aptid,
       });
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         if (!alert(res.data.msg)) {
           window.location.reload();
         }
       }
     } catch (error) {
+      setLoader(false);
       alert(error?.response?.errorMsg);
       console.error(error);
     }

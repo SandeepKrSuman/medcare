@@ -5,6 +5,7 @@ import PublishIcon from "@mui/icons-material/Publish";
 import FormGroup from "@mui/material/FormGroup";
 import Typography from "@mui/material/Typography";
 import api from "../../api";
+import { useAuth } from "../../AuthContext";
 
 const Input = styled("input")({
   display: "none",
@@ -18,6 +19,7 @@ const useStyle = {
 };
 
 export default function FileUploader(props) {
+  const { setLoader } = useAuth();
   const [fileName, setFileName] = useState(null);
   const [errFileName, setErrFileName] = useState(null);
   const [file, setFile] = useState(null);
@@ -48,11 +50,14 @@ export default function FileUploader(props) {
     formData.append("file", file);
 
     try {
+      setLoader(true);
       const res = await api.uploadPrescription(formData);
 
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         setFileName(null);
         setErrFileName(null);
         if (!alert(res.data.msg)) {
@@ -60,6 +65,7 @@ export default function FileUploader(props) {
         }
       }
     } catch (error) {
+      setLoader(false);
       alert(error.response.data.errorMsg);
       console.log(error);
     }

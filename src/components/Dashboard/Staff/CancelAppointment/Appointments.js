@@ -4,17 +4,22 @@ import AppointmentCard from "./AppointmentCard";
 import { Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 export default function Appointments(props) {
+  const { setLoader } = useAuth();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     async function fetchAppointments() {
       try {
+        setLoader(true);
         const res = await api.myAppointments({ patid: props.patid });
         if (res.data.error) {
+          setLoader(false);
           alert(res.data.errorMsg);
         } else {
+          setLoader(false);
           const apt = res.data.filter(
             (appointment) => !appointment.payment && !appointment.cancel
           );
@@ -27,12 +32,13 @@ export default function Appointments(props) {
           }
         }
       } catch (error) {
+        setLoader(false);
         alert(error?.response?.data?.errorMsg);
         console.log(error);
       }
     }
     fetchAppointments();
-  }, [props.patid]);
+  }, [props.patid, setLoader]);
 
   return (
     <div className={styles.container}>

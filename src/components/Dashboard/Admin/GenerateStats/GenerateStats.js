@@ -4,26 +4,32 @@ import Navbar from "../../../Navbar/Navbar";
 import styles from "./GenerateStats.module.css";
 import StatsCard from "./StatsCard";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 export default function GenerateStats() {
+  const { setLoader } = useAuth();
   const [stats, setStats] = useState([]);
 
   useEffect(() => {
     async function fetchStats() {
       try {
+        setLoader(true);
         const res = await api.generateStats();
         if (res.data.error) {
+          setLoader(false);
           alert(res.data.errorMsg);
         } else {
+          setLoader(false);
           setStats(res.data);
         }
       } catch (error) {
+        setLoader(false);
         alert(error?.response?.data?.errorMsg);
         console.log(error);
       }
     }
     fetchStats();
-  }, []);
+  }, [setLoader]);
 
   return (
     <div className={styles.container}>

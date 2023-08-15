@@ -6,7 +6,7 @@ import { useAuth } from "../../AuthContext";
 import styles from "./SignIn.module.css";
 
 export default function SignIn() {
-  const { setUserType } = useAuth();
+  const { setUserType, setLoader } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,13 +16,16 @@ export default function SignIn() {
     const postData = { email, password };
 
     try {
+      setLoader(true);
       const res = await api.signin(postData);
 
       if (res.data.error) {
+        setLoader(false);
         setEmail("");
         setPassword("");
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         setEmail("");
         setPassword("");
         const loggedUser = res.data.userType;
@@ -32,6 +35,7 @@ export default function SignIn() {
         setUserType(loggedUser);
       }
     } catch (error) {
+      setLoader(false);
       setEmail("");
       setPassword("");
       alert(error?.response?.data?.errorMsg || "An Error Occured!");

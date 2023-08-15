@@ -8,6 +8,7 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 const getDate = (inputDate) => {
   const months = [
@@ -34,9 +35,11 @@ const getDate = (inputDate) => {
 };
 
 export default function BookingCard(props) {
+  const { setLoader } = useAuth();
   const navigate = useNavigate();
   const handleClick = async () => {
     try {
+      setLoader(true);
       const postData = {
         patid: jwt_decode(localStorage.getItem("accessToken")).uid,
         docid: props.doctor.uid,
@@ -50,11 +53,14 @@ export default function BookingCard(props) {
       };
       const res = await api.bookAppointment(postData);
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         navigate("/dashboard/patient/make-payment");
       }
     } catch (error) {
+      setLoader(false);
       alert(error?.response?.data?.errorMsg);
       console.log(error);
     }

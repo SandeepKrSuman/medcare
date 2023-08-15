@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 const getDate = (inputDate) => {
   const months = [
@@ -34,8 +35,11 @@ const getDate = (inputDate) => {
 
 export default function BookingCard(props) {
   const navigate = useNavigate();
+  const { setLoader } = useAuth();
+
   const handleClick = async () => {
     try {
+      setLoader(true);
       const postData = {
         patid: props.patid,
         docid: props.doctor.uid,
@@ -49,8 +53,10 @@ export default function BookingCard(props) {
       };
       const res = await api.bookAppointment(postData);
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         navigate("/dashboard/staff/make-payment");
         navigate({
           pathname: "/dashboard/staff/make-payment",
@@ -60,6 +66,7 @@ export default function BookingCard(props) {
         });
       }
     } catch (error) {
+      setLoader(false);
       alert(error?.response?.data?.errorMsg);
       console.log(error);
     }

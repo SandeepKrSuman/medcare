@@ -5,10 +5,12 @@ import DocListCard from "./DocListCard";
 import SelectInput from "../../../SelectInput/SelectInput";
 import styles from "./DocList.module.css";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 const options = ["All Departments", "Cardiology", "Gastrology", "Neurology"];
 
 export default function DocList() {
+  const { setLoader } = useAuth();
   const [department, setDepartment] = useState("All Departments");
   const [docs, setDocs] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -16,20 +18,24 @@ export default function DocList() {
   useEffect(() => {
     async function fetchDocs() {
       try {
+        setLoader(true);
         const res = await api.docList();
         if (res.data.error) {
+          setLoader(false);
           alert(res.data.errorMsg);
         } else {
+          setLoader(false);
           setDocs(res.data);
         }
       } catch (error) {
+        setLoader(false);
         alert(error?.response?.data?.errorMsg || "An Error Occured!");
         console.error(error);
       }
     }
 
     fetchDocs();
-  }, []);
+  }, [setLoader]);
 
   useEffect(() => {
     if (department === "All Departments") {

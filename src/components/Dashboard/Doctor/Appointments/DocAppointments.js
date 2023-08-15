@@ -5,18 +5,23 @@ import { Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import jwt_decode from "jwt-decode";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 export default function DocAppointments() {
+  const { setLoader } = useAuth();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     async function fetchAppointments() {
       try {
+        setLoader(true);
         const uid = jwt_decode(localStorage.getItem("accessToken")).uid;
         const res = await api.docAppointments({ docid: uid });
         if (res.data.error) {
+          setLoader(false);
           alert(res.data.errorMsg);
         } else {
+          setLoader(false);
           setAppointments(
             res.data.sort((a, b) => {
               const dateA = new Date(a.doa);
@@ -26,12 +31,13 @@ export default function DocAppointments() {
           );
         }
       } catch (error) {
+        setLoader(false);
         alert(error?.response?.data?.errorMsg);
         console.log(error);
       }
     }
     fetchAppointments();
-  }, []);
+  }, [setLoader]);
 
   return (
     <div className={styles.container}>

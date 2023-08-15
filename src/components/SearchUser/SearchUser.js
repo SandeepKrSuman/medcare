@@ -3,22 +3,28 @@ import styles from "./SearchUser.module.css";
 import Navbar from "../Navbar/Navbar";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import api from "../../api";
+import { useAuth } from "../../AuthContext";
 
 export default function SearchUser(props) {
+  const { setLoader } = useAuth();
   const [email, setEmail] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      setLoader(true);
       const res = await api.findPatient({ email });
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
         props.setPatid(res.data.uid);
         props.setPatname(`${res.data.fname} ${res.data.lname}`);
+        setLoader(false);
         props.setUserFound(true);
       }
     } catch (error) {
+      setLoader(false);
       alert(error?.response?.data?.errorMsg || "An Error Occured!");
       console.error(error);
     }

@@ -9,8 +9,10 @@ import {
 import { Cancel, DoneOutline } from "@mui/icons-material";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 export default function VerificationCard(props) {
+  const { setLoader } = useAuth();
   const navigate = useNavigate();
 
   const handleVerify = () => {
@@ -24,15 +26,19 @@ export default function VerificationCard(props) {
 
   const handleReject = async () => {
     try {
+      setLoader(true);
       const res = await api.reject({ data: { uid: props.user.uid } });
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         if (!alert(res.data.msg)) {
           window.location.reload();
         }
       }
     } catch (error) {
+      setLoader(false);
       alert(error.response.data.errorMsg);
       console.log(error);
     }

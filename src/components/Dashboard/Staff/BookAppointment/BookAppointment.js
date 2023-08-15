@@ -6,6 +6,7 @@ import styles from "./BookAppointment.module.css";
 import DateSelector from "../../../DateSelector/DateSelector";
 import SelectInput from "../../../SelectInput/SelectInput";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 const options = ["All Departments", "Cardiology", "Gastrology", "Neurology"];
 
@@ -14,6 +15,7 @@ const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const getWeekDay = (dt) => weekdays[dt.getDay()];
 
 export default function BookAppointment(props) {
+  const { setLoader } = useAuth();
   const [currDate, setCurrDate] = useState(new Date());
   const [department, setDepartment] = useState("All Departments");
   const [docs, setDocs] = useState([]);
@@ -22,20 +24,24 @@ export default function BookAppointment(props) {
   useEffect(() => {
     async function fetchDocs() {
       try {
+        setLoader(true);
         const res = await api.docList();
         if (res.data.error) {
+          setLoader(false);
           alert(res.data.errorMsg);
         } else {
+          setLoader(false);
           setDocs(res.data);
         }
       } catch (error) {
+        setLoader(false);
         alert(error?.response?.data?.errorMsg || "An Error Occured!");
         console.error(error);
       }
     }
 
     fetchDocs();
-  }, []);
+  }, [setLoader]);
 
   useEffect(() => {
     if (department === "All Departments") {

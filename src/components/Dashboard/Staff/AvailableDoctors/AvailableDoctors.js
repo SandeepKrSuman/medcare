@@ -5,31 +5,37 @@ import DocListCard from "./DocListCard";
 import SelectInput from "../../../SelectInput/SelectInput";
 import styles from "./AvailableDoctors.module.css";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 const options = ["All Departments", "Cardiology", "Gastrology", "Neurology"];
 
 export default function AvailableDoctors() {
+  const { setLoader } = useAuth();
   const [department, setDepartment] = useState("All Departments");
   const [docs, setDocs] = useState([]);
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
     async function fetchDocs() {
+      setLoader(true);
       try {
         const res = await api.docList();
         if (res.data.error) {
+          setLoader(false);
           alert(res.data.errorMsg);
         } else {
+          setLoader(false);
           setDocs(res.data);
         }
       } catch (error) {
+        setLoader(false);
         alert(error?.response?.data?.errorMsg || "An Error Occured!");
         console.error(error);
       }
     }
 
     fetchDocs();
-  }, []);
+  }, [setLoader]);
 
   useEffect(() => {
     if (department === "All Departments") {

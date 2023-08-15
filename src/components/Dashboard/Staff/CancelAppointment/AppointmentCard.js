@@ -8,20 +8,26 @@ import {
 } from "@mui/material";
 import { Cancel } from "@mui/icons-material";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 export default function AppointmentCard(props) {
+  const { setLoader } = useAuth();
   const handleCancel = async () => {
     const aptid = props.appointment.aptid;
     try {
+      setLoader(true);
       const res = await api.cancelAppointment({ aptid });
       if (res.data.error) {
+        setLoader(false);
         alert(res.data.errorMsg);
       } else {
+        setLoader(false);
         if (!alert(res.data.msg)) {
           window.location.reload();
         }
       }
     } catch (error) {
+      setLoader(false);
       alert(error?.response?.data?.errorMsg || "An Error Occured!");
       console.error(error);
     }

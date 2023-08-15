@@ -19,8 +19,12 @@ const AuthProvider = ({ children }) => {
     }
   });
 
+  const [showLoader, setLoader] = useState(false);
+
   return (
-    <AuthContext.Provider value={{ userType, setUserType }}>
+    <AuthContext.Provider
+      value={{ userType, setUserType, showLoader, setLoader }}
+    >
       {children}
     </AuthContext.Provider>
   );

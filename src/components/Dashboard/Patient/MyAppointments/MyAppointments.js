@@ -5,8 +5,10 @@ import { Grid, Tab, Tabs } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import jwt_decode from "jwt-decode";
 import api from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 export default function MyAppointments() {
+  const { setLoader } = useAuth();
   const [appointments, setAppointments] = useState([]);
   const [apmts, setApmts] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -14,20 +16,24 @@ export default function MyAppointments() {
   useEffect(() => {
     async function fetchAppointments() {
       try {
+        setLoader(true);
         const uid = jwt_decode(localStorage.getItem("accessToken")).uid;
         const res = await api.myAppointments({ patid: uid });
         if (res.data.error) {
+          setLoader(false);
           alert(res.data.errorMsg);
         } else {
+          setLoader(false);
           setAppointments(res.data);
         }
       } catch (error) {
+        setLoader(false);
         alert(error?.response?.data?.errorMsg);
         console.log(error);
       }
     }
     fetchAppointments();
-  }, []);
+  }, [setLoader]);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
