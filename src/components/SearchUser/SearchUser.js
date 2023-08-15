@@ -6,7 +6,7 @@ import api from "../../api";
 import { useAuth } from "../../AuthContext";
 
 export default function SearchUser(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [email, setEmail] = useState("");
 
   const handleSubmit = async (event) => {
@@ -16,7 +16,8 @@ export default function SearchUser(props) {
       const res = await api.findPatient({ email });
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         props.setPatid(res.data.uid);
         props.setPatname(`${res.data.fname} ${res.data.lname}`);
@@ -25,7 +26,8 @@ export default function SearchUser(props) {
       }
     } catch (error) {
       setLoader(false);
-      alert(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlert(true);
       console.error(error);
     }
   };

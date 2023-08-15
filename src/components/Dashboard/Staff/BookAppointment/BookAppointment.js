@@ -15,7 +15,7 @@ const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const getWeekDay = (dt) => weekdays[dt.getDay()];
 
 export default function BookAppointment(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [currDate, setCurrDate] = useState(new Date());
   const [department, setDepartment] = useState("All Departments");
   const [docs, setDocs] = useState([]);
@@ -28,20 +28,22 @@ export default function BookAppointment(props) {
         const res = await api.docList();
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           setDocs(res.data);
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlert(true);
         console.error(error);
       }
     }
 
     fetchDocs();
-  }, [setLoader]);
+  }, [setLoader, setAlert, setAlertMsg]);
 
   useEffect(() => {
     if (department === "All Departments") {

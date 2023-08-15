@@ -11,7 +11,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function DuePaymentCard(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const handlePayment = async () => {
     const aptid = props.appointment.aptid;
     if (!alert("Making a demo payment ...")) {
@@ -20,7 +20,8 @@ export default function DuePaymentCard(props) {
         const res = await api.makePayment({ aptid });
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           if (!alert(res.data.msg)) {
@@ -29,7 +30,8 @@ export default function DuePaymentCard(props) {
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlert(true);
         console.error(error);
       }
     }
@@ -42,7 +44,8 @@ export default function DuePaymentCard(props) {
       const res = await api.cancelAppointment({ aptid });
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
         if (!alert(res.data.msg)) {
@@ -51,7 +54,8 @@ export default function DuePaymentCard(props) {
       }
     } catch (error) {
       setLoader(false);
-      alert(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlert(true);
       console.error(error);
     }
   };

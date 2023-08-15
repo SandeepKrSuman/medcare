@@ -12,7 +12,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function FeedbackCard(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [value, setValue] = useState(props.appointment?.rating || 0);
   const [feedbackText, setFeedbackText] = useState(
     props.appointment?.review || ""
@@ -31,7 +31,8 @@ export default function FeedbackCard(props) {
       });
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
         if (!alert(res.data.msg)) {
@@ -40,7 +41,8 @@ export default function FeedbackCard(props) {
       }
     } catch (error) {
       setLoader(false);
-      alert(error?.response?.errorMsg);
+      setAlertMsg(error?.response?.errorMsg);
+      setAlert(true);
       console.error(error);
     }
   };
@@ -53,7 +55,8 @@ export default function FeedbackCard(props) {
       });
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
         if (!alert(res.data.msg)) {
@@ -62,7 +65,8 @@ export default function FeedbackCard(props) {
       }
     } catch (error) {
       setLoader(false);
-      alert(error?.response?.errorMsg);
+      setAlertMsg(error?.response?.errorMsg);
+      setAlert(true);
       console.error(error);
     }
   };

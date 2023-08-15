@@ -12,7 +12,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function VerificationCard(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const navigate = useNavigate();
 
   const handleVerify = () => {
@@ -30,7 +30,8 @@ export default function VerificationCard(props) {
       const res = await api.reject({ data: { uid: props.user.uid } });
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
         if (!alert(res.data.msg)) {
@@ -39,7 +40,8 @@ export default function VerificationCard(props) {
       }
     } catch (error) {
       setLoader(false);
-      alert(error.response.data.errorMsg);
+      setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlert(true);
       console.log(error);
     }
   };

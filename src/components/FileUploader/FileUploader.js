@@ -19,7 +19,7 @@ const useStyle = {
 };
 
 export default function FileUploader(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [fileName, setFileName] = useState(null);
   const [errFileName, setErrFileName] = useState(null);
   const [file, setFile] = useState(null);
@@ -55,7 +55,8 @@ export default function FileUploader(props) {
 
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
         setFileName(null);
@@ -66,7 +67,8 @@ export default function FileUploader(props) {
       }
     } catch (error) {
       setLoader(false);
-      alert(error.response.data.errorMsg);
+      setAlertMsg(error.response.data.errorMsg);
+      setAlert(true);
       console.log(error);
     }
   }

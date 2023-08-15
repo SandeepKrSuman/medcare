@@ -11,7 +11,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const token = localStorage.getItem("accessToken");
   const userName = token ? jwt_decode(token)?.name : null;
-  const { setUserType, setLoader } = useAuth();
+  const { setUserType, setLoader, setAlert, setAlertMsg } = useAuth();
 
   const handleLogOut = async () => {
     try {
@@ -25,7 +25,8 @@ export default function Navbar() {
       navigate("/");
     } catch (error) {
       setLoader(false);
-      alert(error?.response?.data?.error || "An Error Occured!");
+      setAlertMsg(error?.response?.data?.error || "An Error Occured!");
+      setAlert(true);
       console.error(error);
     }
   };

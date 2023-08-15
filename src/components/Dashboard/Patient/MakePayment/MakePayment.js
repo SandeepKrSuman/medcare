@@ -8,7 +8,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function MakePayment() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
@@ -19,19 +19,21 @@ export default function MakePayment() {
         const res = await api.duePayment({ uid });
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           setAppointments(res.data.reverse());
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg);
+        setAlertMsg(error?.response?.data?.errorMsg);
+        setAlert(true);
         console.log(error);
       }
     }
     fetchUnpaid();
-  }, [setLoader]);
+  }, [setLoader, setAlert, setAlertMsg]);
 
   return (
     <div className={styles.container}>

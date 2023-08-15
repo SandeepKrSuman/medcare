@@ -8,7 +8,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function Prescriptions() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [prescriptions, setPrescriptions] = useState([]);
 
   useEffect(() => {
@@ -19,19 +19,21 @@ export default function Prescriptions() {
         const res = await api.prescriptions({ patid: uid });
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           setPrescriptions(res.data);
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg);
+        setAlertMsg(error?.response?.data?.errorMsg);
+        setAlert(true);
         console.log(error);
       }
     }
     fetchPrescription();
-  }, [setLoader]);
+  }, [setLoader, setAlert, setAlertMsg]);
 
   return (
     <div className={styles.container}>

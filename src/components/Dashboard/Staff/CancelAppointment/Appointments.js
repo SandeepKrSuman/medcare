@@ -7,7 +7,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function Appointments(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,8 @@ export default function Appointments(props) {
         const res = await api.myAppointments({ patid: props.patid });
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           const apt = res.data.filter(
@@ -33,12 +34,13 @@ export default function Appointments(props) {
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg);
+        setAlertMsg(error?.response?.data?.errorMsg);
+        setAlert(true);
         console.log(error);
       }
     }
     fetchAppointments();
-  }, [props.patid, setLoader]);
+  }, [props.patid, setLoader, setAlert, setAlertMsg]);
 
   return (
     <div className={styles.container}>

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../AuthContext";
 
 export default function AppointmentCard(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const navigate = useNavigate();
 
   const handleCancel = async () => {
@@ -22,7 +22,8 @@ export default function AppointmentCard(props) {
       const res = await api.cancelAppointment({ aptid });
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
         if (!alert(res.data.msg)) {
@@ -31,7 +32,8 @@ export default function AppointmentCard(props) {
       }
     } catch (error) {
       setLoader(false);
-      alert(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlert(true);
       console.error(error);
     }
   };

@@ -7,7 +7,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function ViewFeedbacks() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [feedbacks, setFeedbacks] = useState([]);
 
   useEffect(() => {
@@ -17,19 +17,21 @@ export default function ViewFeedbacks() {
         const res = await api.getFeedbacks();
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           setFeedbacks(res.data);
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg);
+        setAlertMsg(error?.response?.data?.errorMsg);
+        setAlert(true);
         console.log(error);
       }
     }
     fetchFeedbacks();
-  }, [setLoader]);
+  }, [setLoader, setAlert, setAlertMsg]);
 
   return (
     <div className={styles.container}>

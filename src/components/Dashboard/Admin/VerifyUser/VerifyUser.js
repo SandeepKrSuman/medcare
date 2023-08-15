@@ -7,7 +7,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function VerifyUser() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [users, setUsers] = useState(null);
 
   useEffect(() => {
@@ -17,20 +17,22 @@ export default function VerifyUser() {
         const res = await api.unverified();
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           setUsers(res.data);
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlert(true);
         console.error(error);
       }
     }
 
     fetchUnverified();
-  }, [setLoader]);
+  }, [setLoader, setAlert, setAlertMsg]);
 
   return (
     <div className={styles.container}>

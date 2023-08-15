@@ -20,10 +20,24 @@ const AuthProvider = ({ children }) => {
   });
 
   const [showLoader, setLoader] = useState(false);
+  const [showAlert, setAlert] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+  const [alertType, setAlertType] = useState("error");
 
   return (
     <AuthContext.Provider
-      value={{ userType, setUserType, showLoader, setLoader }}
+      value={{
+        userType,
+        setUserType,
+        showLoader,
+        setLoader,
+        showAlert,
+        setAlert,
+        alertMsg,
+        setAlertMsg,
+        alertType,
+        setAlertType,
+      }}
     >
       {children}
     </AuthContext.Provider>

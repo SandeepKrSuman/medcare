@@ -8,7 +8,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function DocFeedbacks() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [feedbacks, setFeedbacks] = useState([]);
 
   useEffect(() => {
@@ -19,19 +19,21 @@ export default function DocFeedbacks() {
         const res = await api.docFeedbacks({ docid: uid });
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           setFeedbacks(res.data);
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg);
+        setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlert(true);
         console.log(error);
       }
     }
     fetchFeedbacks();
-  }, [setLoader]);
+  }, [setLoader, setAlert, setAlertMsg]);
 
   return (
     <div className={styles.container}>

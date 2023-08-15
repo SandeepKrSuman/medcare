@@ -7,7 +7,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function GenerateStats() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [stats, setStats] = useState([]);
 
   useEffect(() => {
@@ -17,19 +17,21 @@ export default function GenerateStats() {
         const res = await api.generateStats();
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           setStats(res.data);
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg);
+        setAlertMsg(error?.response?.data?.errorMsg);
+        setAlert(true);
         console.log(error);
       }
     }
     fetchStats();
-  }, [setLoader]);
+  }, [setLoader, setAlert, setAlertMsg]);
 
   return (
     <div className={styles.container}>

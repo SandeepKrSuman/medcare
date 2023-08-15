@@ -5,6 +5,7 @@ import App from "./App";
 import "./index.css";
 import { AuthProvider } from "./AuthContext";
 import Loader from "./components/Loader/Loader";
+import Snack from "./components/Snack/Snack";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,6 +13,7 @@ root.render(
     <AuthProvider>
       <App />
       <Loader />
+      <Snack />
     </AuthProvider>
   </React.StrictMode>
 );

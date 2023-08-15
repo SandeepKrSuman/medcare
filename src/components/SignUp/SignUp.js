@@ -9,7 +9,7 @@ import { useAuth } from "../../AuthContext";
 const options = ["Patient", "Staff", "Doctor"];
 
 export default function SignUp() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg, setAlertType } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState("Patient");
   const [department, setDepartment] = useState("");
@@ -37,7 +37,8 @@ export default function SignUp() {
       const res = await api.signup(postData);
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
         setUser("Patient");
@@ -48,13 +49,16 @@ export default function SignUp() {
         setEmail("");
         setPassword("");
 
-        alert(res.data.msg);
+        setAlertMsg(res.data.msg);
+        setAlertType("success");
+        setAlert(true);
 
         navigate("/signin");
       }
     } catch (error) {
       setLoader(false);
-      alert(error.response?.data?.errorMsg || "An error occurred!");
+      setAlertMsg(error.response?.data?.errorMsg || "An error occurred!");
+      setAlert(true);
       console.error(error);
     }
   };

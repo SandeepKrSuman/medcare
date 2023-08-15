@@ -35,7 +35,7 @@ const getDate = (inputDate) => {
 };
 
 export default function BookingCard(props) {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const navigate = useNavigate();
   const handleClick = async () => {
     try {
@@ -54,14 +54,16 @@ export default function BookingCard(props) {
       const res = await api.bookAppointment(postData);
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
         navigate("/dashboard/patient/make-payment");
       }
     } catch (error) {
       setLoader(false);
-      alert(error?.response?.data?.errorMsg);
+      setAlertMsg(error?.response?.data?.errorMsg);
+      setAlert(true);
       console.log(error);
     }
   };

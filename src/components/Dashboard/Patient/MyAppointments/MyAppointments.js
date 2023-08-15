@@ -8,7 +8,7 @@ import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
 
 export default function MyAppointments() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [appointments, setAppointments] = useState([]);
   const [apmts, setApmts] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -21,19 +21,19 @@ export default function MyAppointments() {
         const res = await api.myAppointments({ patid: uid });
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
         } else {
           setLoader(false);
           setAppointments(res.data);
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg);
+        setAlertMsg(error?.response?.data?.errorMsg);
         console.log(error);
       }
     }
     fetchAppointments();
-  }, [setLoader]);
+  }, [setLoader, setAlert, setAlertMsg]);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);

@@ -8,7 +8,7 @@ import { useAuth } from "../../../../AuthContext";
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function AddNew() {
-  const { setLoader } = useAuth();
+  const { setLoader, setAlert, setAlertMsg, setAlertType } = useAuth();
   const [searchParams] = useSearchParams();
   const [userType, setUserType] = useState("");
   const [fullName, setFullName] = useState("");
@@ -26,7 +26,8 @@ export default function AddNew() {
         const res = await api.findUser({ uid });
         if (res.data.error) {
           setLoader(false);
-          alert(res.data.errorMsg);
+          setAlertMsg(res.data.errorMsg);
+          setAlert(true);
         } else {
           setLoader(false);
           setUserType(res.data.userType || "");
@@ -40,13 +41,14 @@ export default function AddNew() {
         }
       } catch (error) {
         setLoader(false);
-        alert(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+        setAlert(true);
         console.error(error);
       }
     }
     const uid = searchParams.get("uid");
     findUser(uid);
-  }, [searchParams, setLoader]);
+  }, [searchParams, setLoader, setAlert, setAlertMsg]);
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
@@ -74,14 +76,18 @@ export default function AddNew() {
       });
       if (res.data.error) {
         setLoader(false);
-        alert(res.data.errorMsg);
+        setAlertMsg(res.data.errorMsg);
+        setAlert(true);
       } else {
         setLoader(false);
-        alert(res.data.msg);
+        setAlertMsg(res.data.msg);
+        setAlertType("success");
+        setAlert(true);
       }
     } catch (error) {
       setLoader(false);
-      alert(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
+      setAlert(true);
       console.error(error);
     }
   };
