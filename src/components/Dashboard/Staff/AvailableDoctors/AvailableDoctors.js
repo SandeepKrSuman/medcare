@@ -6,8 +6,7 @@ import SelectInput from "../../../SelectInput/SelectInput";
 import styles from "./AvailableDoctors.module.css";
 import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
-
-const options = ["All Departments", "Cardiology", "Gastrology", "Neurology"];
+import { departments } from "../../Doctor/doctorDepartments";
 
 export default function AvailableDoctors() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
@@ -56,7 +55,7 @@ export default function AvailableDoctors() {
           label=""
           value={department}
           setValue={setDepartment}
-          options={options}
+          options={departments}
         />
       </div>
       <div className={styles.cardContainer}>

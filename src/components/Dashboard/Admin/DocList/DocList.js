@@ -5,9 +5,8 @@ import DocListCard from "./DocListCard";
 import SelectInput from "../../../SelectInput/SelectInput";
 import styles from "./DocList.module.css";
 import api from "../../../../api";
+import { departments } from "../../Doctor/doctorDepartments";
 import { useAuth } from "../../../../AuthContext";
-
-const options = ["All Departments", "Cardiology", "Gastrology", "Neurology"];
 
 export default function DocList() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
@@ -56,7 +55,7 @@ export default function DocList() {
           label=""
           value={department}
           setValue={setDepartment}
-          options={options}
+          options={departments}
         />
       </div>
       <div className={styles.cardContainer}>

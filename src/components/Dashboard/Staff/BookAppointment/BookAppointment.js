@@ -5,10 +5,9 @@ import BookingCard from "./BookingCard";
 import styles from "./BookAppointment.module.css";
 import DateSelector from "../../../DateSelector/DateSelector";
 import SelectInput from "../../../SelectInput/SelectInput";
+import { departments } from "../../Doctor/doctorDepartments";
 import api from "../../../../api";
 import { useAuth } from "../../../../AuthContext";
-
-const options = ["All Departments", "Cardiology", "Gastrology", "Neurology"];
 
 const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -69,7 +68,7 @@ export default function BookAppointment(props) {
           label=""
           value={department}
           setValue={setDepartment}
-          options={options}
+          options={departments}
         />
         <DateSelector currDate={currDate} setCurrDate={setCurrDate} />
       </div>
