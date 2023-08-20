@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import DuePaymentCard from "./DuePaymentCard";
 import styles from "./MakePayment.module.css";
@@ -10,17 +10,20 @@ import { useAuth } from "../../../../AuthContext";
 export default function MakePayment() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [appointments, setAppointments] = useState([]);
+  const [unavailableMsg, setUnavailableMsg] = useState(null);
 
   useEffect(() => {
     async function fetchUnpaid() {
       try {
         setLoader(true);
+        setUnavailableMsg(null);
         const uid = jwt_decode(localStorage.getItem("accessToken")).uid;
         const res = await api.duePayment({ uid });
         if (res.data.error) {
           setLoader(false);
           setAlertMsg(res.data.errorMsg);
           setAlert(true);
+          console.log("para para");
         } else {
           setLoader(false);
           setAppointments(res.data.reverse());
@@ -30,6 +33,9 @@ export default function MakePayment() {
         setAlertMsg(error?.response?.data?.errorMsg);
         setAlert(true);
         console.log(error);
+        if (error.response.status === 404) {
+          setUnavailableMsg("** No payment found due **");
+        }
       }
     }
     fetchUnpaid();
@@ -46,6 +52,7 @@ export default function MakePayment() {
             </Grid>
           ))}
         </Grid>
+        {unavailableMsg && <Alert icon={false}>{unavailableMsg}</Alert>}
       </div>
     </div>
   );

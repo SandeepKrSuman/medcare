@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    min-height: 100vh;
 }
 
 .cardContainer {
@@ -10,6 +11,7 @@
     flex: 1;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100%;
     max-width: 900px;
     padding: 7%;

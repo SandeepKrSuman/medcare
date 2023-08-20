@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import FeedbackCard from "./FeedbackCard";
 import styles from "./DocFeedbacks.module.css";
@@ -10,11 +10,13 @@ import { useAuth } from "../../../../AuthContext";
 export default function DocFeedbacks() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [feedbacks, setFeedbacks] = useState([]);
+  const [unavailableMsg, setUnavailableMsg] = useState(null);
 
   useEffect(() => {
     async function fetchFeedbacks() {
       try {
         setLoader(true);
+        setUnavailableMsg(null);
         const uid = jwt_decode(localStorage.getItem("accessToken")).uid;
         const res = await api.docFeedbacks({ docid: uid });
         if (res.data.error) {
@@ -30,6 +32,11 @@ export default function DocFeedbacks() {
         setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
         setAlert(true);
         console.log(error);
+        if (error.response.status === 404) {
+          setUnavailableMsg(
+            "Feedbacks given by the patients will appear here."
+          );
+        }
       }
     }
     fetchFeedbacks();
@@ -46,6 +53,11 @@ export default function DocFeedbacks() {
             </Grid>
           ))}
         </Grid>
+        {unavailableMsg && (
+          <Alert icon={false} severity="error">
+            {unavailableMsg}
+          </Alert>
+        )}
       </div>
     </div>
   );

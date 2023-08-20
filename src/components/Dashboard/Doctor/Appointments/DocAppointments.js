@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DocAppointments.module.css";
 import AppointmentCard from "./AppointmentCard";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import jwt_decode from "jwt-decode";
 import api from "../../../../api";
@@ -10,11 +10,13 @@ import { useAuth } from "../../../../AuthContext";
 export default function DocAppointments() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [appointments, setAppointments] = useState([]);
+  const [unavailableMsg, setUnavailableMsg] = useState(null);
 
   useEffect(() => {
     async function fetchAppointments() {
       try {
         setLoader(true);
+        setUnavailableMsg(null);
         const uid = jwt_decode(localStorage.getItem("accessToken")).uid;
         const res = await api.docAppointments({ docid: uid });
         if (res.data.error) {
@@ -36,6 +38,9 @@ export default function DocAppointments() {
         setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
         setAlert(true);
         console.log(error);
+        if (error.response.status === 404) {
+          setUnavailableMsg("** No Upcoming Appointment **");
+        }
       }
     }
     fetchAppointments();
@@ -52,6 +57,11 @@ export default function DocAppointments() {
             </Grid>
           ))}
         </Grid>
+        {unavailableMsg && (
+          <Alert icon={false} severity="error">
+            {unavailableMsg}
+          </Alert>
+        )}
       </div>
     </div>
   );

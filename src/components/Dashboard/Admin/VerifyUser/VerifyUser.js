@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import styles from "./VerifyUser.module.css";
 import VerificationCard from "./VerificationCard";
@@ -9,6 +9,7 @@ import { useAuth } from "../../../../AuthContext";
 export default function VerifyUser() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [users, setUsers] = useState(null);
+  const [unavailableMsg, setUnavailableMsg] = useState(null);
 
   useEffect(() => {
     async function fetchUnverified() {
@@ -28,6 +29,9 @@ export default function VerifyUser() {
         setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
         setAlert(true);
         console.error(error);
+        if (error.response.status === 404) {
+          setUnavailableMsg("Unverified Users will appear here.");
+        }
       }
     }
 
@@ -45,6 +49,11 @@ export default function VerifyUser() {
             </Grid>
           ))}
         </Grid>
+        {unavailableMsg && (
+          <Alert icon={false} severity="error">
+            {unavailableMsg}
+          </Alert>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import PrescriptionCard from "./PrescriptionCard";
 import styles from "./Prescriptions.module.css";
@@ -10,11 +10,13 @@ import { useAuth } from "../../../../AuthContext";
 export default function Prescriptions() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [prescriptions, setPrescriptions] = useState([]);
+  const [unavailableMsg, setUnavailableMsg] = useState(null);
 
   useEffect(() => {
     async function fetchPrescription() {
       try {
         setLoader(true);
+        setUnavailableMsg(null);
         const uid = jwt_decode(localStorage.getItem("accessToken")).uid;
         const res = await api.prescriptions({ patid: uid });
         if (res.data.error) {
@@ -30,6 +32,9 @@ export default function Prescriptions() {
         setAlertMsg(error?.response?.data?.errorMsg);
         setAlert(true);
         console.log(error);
+        if (error.response.status === 404) {
+          setUnavailableMsg("** You have not been prescribed yet **");
+        }
       }
     }
     fetchPrescription();
@@ -46,6 +51,11 @@ export default function Prescriptions() {
             </Grid>
           ))}
         </Grid>
+        {unavailableMsg && (
+          <Alert icon={false} severity="error">
+            {unavailableMsg}
+          </Alert>
+        )}
       </div>
     </div>
   );

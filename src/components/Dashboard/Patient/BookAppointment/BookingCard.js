@@ -78,7 +78,7 @@ export default function BookingCard(props) {
         <Typography sx={{ mb: 0.5, fontSize: "0.8rem" }} color="text.secondary">
           {props.doctor.speciality}
         </Typography>
-        <Typography sx={{ mb: 3, fontSize: "0.9rem" }} color="text.secondary">
+        <Typography sx={{ mb: 3, fontSize: "0.9rem" }} color="#468B97">
           {`Department of ${props.doctor.department}`}
         </Typography>
         <Typography

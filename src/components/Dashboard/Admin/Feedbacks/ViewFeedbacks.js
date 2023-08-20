@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import styles from "./ViewFeedbacks.module.css";
 import FeedbackCard from "./FeedbackCard";
@@ -9,11 +9,13 @@ import { useAuth } from "../../../../AuthContext";
 export default function ViewFeedbacks() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [feedbacks, setFeedbacks] = useState([]);
+  const [unavailableMsg, setUnavailableMsg] = useState(null);
 
   useEffect(() => {
     async function fetchFeedbacks() {
       try {
         setLoader(true);
+        setUnavailableMsg(null);
         const res = await api.getFeedbacks();
         if (res.data.error) {
           setLoader(false);
@@ -28,6 +30,11 @@ export default function ViewFeedbacks() {
         setAlertMsg(error?.response?.data?.errorMsg);
         setAlert(true);
         console.log(error);
+        if (error.response.status === 404) {
+          setUnavailableMsg(
+            "Feedbacks given by the patients will appear here."
+          );
+        }
       }
     }
     fetchFeedbacks();
@@ -44,6 +51,11 @@ export default function ViewFeedbacks() {
             </Grid>
           ))}
         </Grid>
+        {unavailableMsg && (
+          <Alert icon={false} severity="error">
+            {unavailableMsg}
+          </Alert>
+        )}
       </div>
     </div>
   );

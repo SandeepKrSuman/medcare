@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import BookingCard from "./BookingCard";
 import styles from "./BookAppointment.module.css";
@@ -19,6 +19,7 @@ export default function BookAppointment() {
   const [department, setDepartment] = useState("All Departments");
   const [docs, setDocs] = useState([]);
   const [doctors, setDoctors] = useState([]);
+  const [unavailableMsg, setUnavailableMsg] = useState(null);
 
   useEffect(() => {
     async function fetchDocs() {
@@ -45,11 +46,16 @@ export default function BookAppointment() {
   }, [setLoader, setAlert, setAlertMsg]);
 
   useEffect(() => {
+    setUnavailableMsg(null);
+
     if (department === "All Departments") {
       const filteredData = docs.filter((doc) =>
         doc.workDays.includes(getWeekDay(currDate))
       );
       setDoctors(filteredData);
+      docs.length > 0 && filteredData.length === 0
+        ? setUnavailableMsg("** No doctor available on the selected day **")
+        : setUnavailableMsg(null);
     } else {
       const filteredData = docs.filter(
         (doc) =>
@@ -57,6 +63,9 @@ export default function BookAppointment() {
           doc.department === department
       );
       setDoctors(filteredData);
+      docs.length > 0 && filteredData.length === 0
+        ? setUnavailableMsg("** No doctor available on the selected day **")
+        : setUnavailableMsg(null);
     }
   }, [department, currDate, docs]);
 
@@ -80,6 +89,11 @@ export default function BookAppointment() {
             </Grid>
           ))}
         </Grid>
+        {unavailableMsg && (
+          <Alert icon={false} severity="error">
+            {unavailableMsg}
+          </Alert>
+        )}
       </div>
     </div>
   );

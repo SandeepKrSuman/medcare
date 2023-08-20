@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import Navbar from "../../../Navbar/Navbar";
 import UploadPrescriptionCard from "./UploadPrescriptionCard";
 import styles from "./UploadPrescription.module.css";
@@ -10,11 +10,13 @@ import { useAuth } from "../../../../AuthContext";
 export default function UploadPrescription() {
   const { setLoader, setAlert, setAlertMsg } = useAuth();
   const [appointments, setAppointments] = useState([]);
+  const [unavailableMsg, setUnavailableMsg] = useState(null);
 
   useEffect(() => {
     async function fetchAppointments() {
       try {
         setLoader(true);
+        setUnavailableMsg(null);
         const uid = jwt_decode(localStorage.getItem("accessToken")).uid;
         const res = await api.docAppointments({ docid: uid });
         if (res.data.error) {
@@ -36,6 +38,9 @@ export default function UploadPrescription() {
         setAlertMsg(error?.response?.data?.errorMsg || "An Error Occured!");
         setAlert(true);
         console.log(error);
+        if (error.response.status === 404) {
+          setUnavailableMsg("** No Upcoming Appointment **");
+        }
       }
     }
     fetchAppointments();
@@ -55,6 +60,11 @@ export default function UploadPrescription() {
             </Grid>
           ))}
         </Grid>
+        {unavailableMsg && (
+          <Alert icon={false} severity="error">
+            {unavailableMsg}
+          </Alert>
+        )}
       </div>
     </div>
   );
