@@ -1,70 +1,102 @@
-# Getting Started with Create React App
+![](./public/readme_assets/homepage.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+### Who will use this system
 
-### `npm start`
+- Patients
+- Reception Staffs
+- Doctors
+- Admin
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<br>
+<br>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Login
 
-### `npm test`
+![](./public/readme_assets/signup.gif)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To access the system and database, users must first register using a distinct email ID and password. This registration will serve as their login credentials. During registration, users should choose the appropriate user type and complete the signup form. Upon successful completion, users will be registered and automatically directed to the signin page.
 
-### `npm run build`
+![](./public/readme_assets/signin.jpg)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Once registered, users can sign in using the provided email address and password. Upon successful sign in, users will be promptly taken to their respective dashboards, determined by their designated user type.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br>
+<br>
 
-### `npm run eject`
+### Patient Dashboard
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![](./public/readme_assets/patient_dashboard.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[See Detailed View](./PATIENT.md)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Staff Dashboard
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![](./public/readme_assets/staff_dashboard.png)
 
-## Learn More
+[See Detailed View](./STAFF.md)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Doctor Dashboard
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![](./public/readme_assets/doctor_dashboard.png)
 
-### Code Splitting
+[See Detailed View](./DOCTOR.md)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Admin Dashboard
 
-### Analyzing the Bundle Size
+![](./public/readme_assets/admin_dashboard.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+[See Detailed View](./ADMIN.md)
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+<br>
+<br>
 
-### Advanced Configuration
+### Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<p align="center">
+     <img atl="MongoDB" src="https://img.shields.io/badge/-Mongodb-green?logo=mongodb&style=for-the-badge&logoColor=white">
+     <img atl="ExpressJS" src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB">
+     <img atl="React" src="https://img.shields.io/badge/-react-black?logo=react&style=for-the-badge">
+     <img atl="NodeJS" src="https://img.shields.io/badge/node.js-%2343853D.svg?style=for-the-badge&logo=node-dot-js&logoColor=white">
+     <br />
+     <img atl="Mongoose" src="https://img.shields.io/badge/-Mongoose-brown?logo=mongoose&style=for-the-badge&logoColor=white">
+     <img alt="JavaScript" src="https://img.shields.io/badge/-javascript-yellow?logo=javascript&logoColor=white&style=for-the-badge">
+     <img alt="mui" src="https://img.shields.io/badge/-mui-blue?logo=mui&logoColor=white&style=for-the-badge">
+     <img alt="css" src="https://img.shields.io/badge/-css3-blue?logo=css3&style=for-the-badge">
+     <img alt="html" src="https://img.shields.io/badge/-html5-red?logo=html5&logoColor=white&style=for-the-badge">
+</p>
+  
+---
 
-### Deployment
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Prerequisites
 
-### `npm run build` fails to minify
+This App uses NodeJS backend server for its functionality. First of all, setup the local server using the steps provided in the [medcare-server repo](https://github.com/SandeepKrSuman/medcare-server).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Installation
+
+- Step 1: Fork [this repo](https://github.com/SandeepKrSuman/medcare).
+- Step 2: Clone your forked version of this repo locally. To clone, go to your command line / terminal, cd over to an appropriate directory and type in `git clone https://github.com/<your GitHub username>/medcare.git`.
+- Step 3: `cd medcare`
+- Step 4: While in the `medcare` directory, install the frontend dependencies using `npm install`.
+- Step 5: Finally start the react app using `npm start`. The app will start on port `3000` which can be accessed through <http://localhost:3000/>.
+
+---
+
+<br> <br>
+
+<p align='center'>If you like this project do show some love by giving this repo a 🌟.</p>
+  
+<br>
+
+### License
+
+[MIT](LICENSE) © [SandeepKrSuman](https://github.com/SandeepKrSuman)
