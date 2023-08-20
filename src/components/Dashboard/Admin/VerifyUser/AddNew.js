@@ -125,6 +125,7 @@ export default function AddNew() {
                 name="email"
                 value={email}
                 disabled={true}
+                autoComplete="email"
                 required
               />
             </div>
@@ -149,14 +150,16 @@ export default function AddNew() {
           </div>
           <div className={styles.rrow}>
             <div className={styles.col25}>
-              <label htmlFor="workdays">Work Days</label>
+              <p className={styles.workdaysLabel}>Work Days</p>
             </div>
             <div className={styles.col75}>
               <div className={styles.checkboxContainer}>
                 {days.map((day) => (
-                  <label key={day}>
+                  <label key={day} htmlFor={`workday-${day}`}>
                     <input
                       type="checkbox"
+                      name="workday"
+                      id={`workday-${day}`}
                       value={day}
                       checked={workDays.includes(day)}
                       onChange={handleCheckboxChange}
@@ -179,7 +182,7 @@ export default function AddNew() {
                 name="time"
                 value={time}
                 onChange={(event) => setTime(event.target.value)}
-                placeholder="time ..."
+                placeholder="Time ..."
                 autoComplete="off"
                 required
               />

@@ -39,7 +39,7 @@
   font-family: "Montserrat", sans-serif;
 }
 
-label {
+label, .workdaysLabel {
   padding: 12px 12px 12px 0;
   display: inline-block;
   font-family: "Montserrat", sans-serif;
