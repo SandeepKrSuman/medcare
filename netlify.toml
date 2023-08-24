@@ -18,3 +18,7 @@
   for = "*.ico"
   [headers.values]
     Cache-Control = "public, max-age=2592000, must-revalidate"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
