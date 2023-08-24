@@ -99,7 +99,7 @@ export default function BookingCard(props) {
             BOOK
           </Button>
           <Button sx={{ pointerEvents: "none", color: "#000" }}>
-            {"₹ 2500/-"}
+            {`₹ ${props.doctor.fee}/-`}
           </Button>
         </CardActions>
       </CardContent>
