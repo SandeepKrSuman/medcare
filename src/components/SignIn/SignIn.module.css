@@ -1,41 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
 .container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  min-height: 100vh;
+  background-color: #fcfefe;
+  background-image: url(/public/patternbg.png);
+  padding: 0 20%;
+}
+
+.col1,
+.col2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.col2 img {
+  max-width: 100%;
+  width: 95%;
+  transition: width 1s ease-in-out;
+}
+
+.col2 img:hover {
+  width: 100%;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 35%;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 5px;
+  padding: 30px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .linkBtn {
-    color: #2196f3;
-    font-size: 1rem;
-    font-family: 'Noto Sans', sans-serif;
-    align-self: self-end;
+  color: #2196f3;
+  font-size: 1rem;
+  font-family: "Noto Sans", sans-serif;
+  align-self: self-end;
 }
 
 .linkBtn:hover {
-    color: #1769aa;
+  color: #1769aa;
 }
 
-@media screen and (max-width: 1024px) {
-    .form {
-        width: 50%;
-    }
+@media screen and (max-width: 1080px) {
+  .container {
+    padding: 0 7%;
+  }
+
+  .form {
+    width: 50%;
+  }
+
+  .col2 {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 767px) {
-    .form {
-        width: 100%;
-    }
+  .form {
+    width: 100%;
+  }
 }
